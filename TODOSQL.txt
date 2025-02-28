@@ -1,0 +1,28 @@
+SQL STUFF
+REGION
+    R_id
+    R_name
+
+CUSTOMER
+    C_id
+    C_name
+    C_address
+    C_province
+    C_postal
+    C_phone
+    C_region
+
+BILL
+    B_id
+    B_issueDate
+    B_dueDate (calculated field -> Issue Date)
+    B_overdue
+    B_balance       (calculated field -> Counts x Costs)
+    B_amtPaid
+    B_C_id          (Foreign Key)
+    B_oilCount
+    B_solarCount
+    B_nuclearCount
+    B_oilCost
+    B_solarCost 
+    B_NuclearCost
