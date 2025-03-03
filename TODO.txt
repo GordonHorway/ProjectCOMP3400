@@ -23,29 +23,3 @@
     4.5 View Customers with Unpaid Bills
     4.6 View Customers with Overdue Bills
 
-
-NOTES TO REMEMBER
-1.1 Add New Customer
-    Check if customer already exists
-    Check if 
-
-
-SQL STUFF
-REGION
-    R_id
-    R_name
-
-CUSTOMER
-    C_id
-    C_name
-    C_address
-    C_province
-    C_postal
-    C_phone
-    C_region
-
-BILL
-    B_id
-    B_dueDate
-    B_balance
-    

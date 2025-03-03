@@ -1,28 +1,34 @@
 SQL STUFF
 REGION
-    R_id
-    R_name
+    R_id        (Primary Key)
+    R_name      
 
 CUSTOMER
-    C_id
-    C_name
-    C_address
-    C_province
-    C_postal
-    C_phone
-    C_region
+    C_id        (Primary Key)
+    C_name    
+    C_address  
+    C_postal  
+    C_phone    
+    C_R_id      (Foreign Key) (REGION)
 
 BILL
-    B_id
+    B_id            (Primary Key)
+    B_C_id          (Foreign Key) (CUSTOMER)
     B_issueDate
-    B_dueDate (calculated field -> Issue Date)
+    B_dueDate       (Calculated field -> Issue Date)
     B_overdue
-    B_balance       (calculated field -> Counts x Costs)
+    B_balance       (Calculated field -> Counts x Costs)
     B_amtPaid
-    B_C_id          (Foreign Key)
     B_oilCount
     B_solarCount
     B_nuclearCount
-    B_oilCost
-    B_solarCost 
-    B_NuclearCost
+    B_oilCost       (Recorded at BILL creation)
+    B_solarCost     (Recorded at BILL creation)
+    B_nuclearCost   (Recorded at BILL creation)
+
+ORDER
+    O_id            (Primary Key)
+    O_C_id          (Foreign Key) (CUSTOMER)
+    O_oilCount
+    O_solarCount
+    O_nuclearCost
