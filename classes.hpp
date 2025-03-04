@@ -138,12 +138,12 @@ class EnergyProvider {
         inFile.close();
     }
     void displayAllPrices(){
-        cout << "Oil Price : " << oilPrice << endl;
-        cout << "Solar Price : " << solarPrice << endl;
-        cout << "Nuclear Price : " << nuclearPrice << endl;
+        cout << "Oil Price :     $" << oilPrice << endl;
+        cout << "Solar Price :   $" << solarPrice << endl;
+        cout << "Nuclear Price : $" << nuclearPrice << endl;
     }
     EnergyProvider &viewCustomer(string C_id){
-        for(auto const region : regions){
+        for(auto const &region : regions){
             auto it = region.customers.find(C_id);
             if(it != region.customers.end()){
                 it->second.printInfo();
@@ -152,9 +152,9 @@ class EnergyProvider {
         return (*this);
     }
     EnergyProvider &viewCustomersByProvince(string R_id){
-        for(auto const region : regions){
+        for(auto const &region : regions){
             if(region.R_id == R_id){
-                for(auto const customer : region.customers){
+                for(auto const &customer : region.customers){
                     customer.second.printInfo();
                 }
                 break;
@@ -166,7 +166,6 @@ class EnergyProvider {
         for(auto &region : regions){
             if(region.R_id == C_R_id){
                 region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
-                // cout << "Sucessful insertion!" << endl;
                 break;
             }
         }
@@ -182,13 +181,13 @@ class EnergyProvider {
         return (*this);
     }
     bool editOilPrice(double newOilPrice){
-        return newOilPrice > 0 ? (oilPrice = newOilPrice, true) : false;
+        return newOilPrice > 0 ? (oilPrice = newOilPrice, true) : (cout << "price cannot be less than or equal to 0", false);
     }
     bool editSolarPrice(double newSolarPrice){
-        return newSolarPrice > 0 ? (solarPrice = newSolarPrice, true) : false;
+        return newSolarPrice > 0 ? (solarPrice = newSolarPrice, true) : (cout << "price cannot be less than or equal to 0", false);
     }
     bool editNuclearPrice(double newNuclearPrice){
-        return nuclearPrice > 0 ? (nuclearPrice = newNuclearPrice, true) : false;
+        return nuclearPrice > 0 ? (nuclearPrice = newNuclearPrice, true) : (cout << "price cannot be less than or equal to 0", false);
     }
     void readFile(){
         cout << "Enter name of file in current working directory : ";
@@ -202,7 +201,6 @@ class EnergyProvider {
         while(getline(inFile, line)){
             stringstream ss(line);
             while(getline(ss, token, ',')){
-                // cout << token << endl;
                 tokens.push_back(token);
             }
             if(tokens.size() == 5){

@@ -30,7 +30,9 @@ bool date(const string &input);
 
 bool name(const string& input);
 
+bool address(const string& input);
+
 // Second parameter is a function pointer to any of the regex functions of the form having the signature string identifier();
-void getField(string &input,  bool (*re_ptr)(const string&));
+void getField(string &input,  bool (*re_ptr)(const string&), string prompt);
 
 #endif
