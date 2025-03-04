@@ -2,8 +2,9 @@
 #include "classes.hpp"
 #include "library.hpp"
 
-
 int main(){
+
+    EnergyProvider energyProvider("0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
 
     // loop for menu in terminal
     while(true){

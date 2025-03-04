@@ -17,7 +17,7 @@ void clear(){
 
 // here we will add menu options
 void menu(){
-
+	cout << "1.) Print Regions" << endl;
 }
 
 // I overloaded all the validation functions

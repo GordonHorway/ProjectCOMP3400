@@ -4,8 +4,12 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <initializer_list>
 
 using namespace std;
+
+constexpr int num_regions = 5;
+constexpr int num_customers = 100;
 
 class Customer {
     public:
@@ -38,11 +42,23 @@ class Region {
 };
 
 class EnergyProvider {
+    public:
     string E_id; // do we really need unique id if we are going to have just one Energy Provider object?
     string E_name;
-    EnergyProvider(string E_id, string E_name){
+    EnergyProvider(string E_id, string E_name, initializer_list<pair<string, string>> list){
         this->E_id = E_id;
         this->E_name = E_name;
+        regions.reserve(num_regions);
+        for(auto const &pair : list){
+            regions.push_back(Region(pair.first, pair.second));
+        }
+    }
+    EnergyProvider &printRegions(){
+        for(auto const region : regions){
+            cout << region.R_id << endl;
+            cout << region.R_name << endl;
+        }
+        return (*this);
     }
     // only 5 elements therefore we dont need fancy data structure for lookup
     vector<Region> regions;
