@@ -2,37 +2,14 @@
 #define LIBRARY_H
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
+#include <initializer_list>
 
 using namespace std;
 
-class Customer;
-class Region;
-
-class Region {
-    public:
-    string R_id;
-    string R_name;
-    Region() = default;
-    Region(string R_id, string R_name){
-        this->R_id = R_id;
-        this->R_name = R_name;
-    }
-    // using map instead of vector because lookup is way faster
-    unordered_map<string, Customer> customers;
-};
-
-class EnergyProvider {
-    string E_id; // do we really need unique id if we are going to have just one Energy Provider object?
-    string E_name;
-    EnergyProvider(string E_id, string E_name){
-        this->E_id = E_id;
-        this->E_name = E_name;
-    }
-    // only 5 elements therefore we dont need fancy data structure for lookup
-    vector<Region> regions;
-};
+constexpr int num_regions = 5;
+constexpr int num_customers = 100;
 
 class Customer {
     public:
@@ -49,6 +26,73 @@ class Customer {
         this->C_phone = C_phone;
         this->C_R_id = C_R_id;
     }
+    void printInfo() const {
+        cout << "C_id : " << C_id << endl;
+        cout << "C_name : " << C_name << endl;
+        cout << "C_address : " << C_address << endl;
+        cout << "C_phone : " << C_phone << endl;
+        cout << "C_R_id : " << C_R_id << endl;
+    }
+};
+
+class Region {
+    public:
+    string R_id;
+    string R_name;
+    Region() = default;
+    Region(string R_id, string R_name){
+        this->R_id = R_id;
+        this->R_name = R_name;
+    }
+    // using map instead of vector because lookup is way faster
+    unordered_map<string, Customer> customers;
+};
+
+class EnergyProvider {
+    public:
+    string E_id; // do we really need unique id if we are going to have just one Energy Provider object?
+    string E_name;
+    EnergyProvider(string E_id, string E_name, initializer_list<pair<string, string>> list){
+        this->E_id = E_id;
+        this->E_name = E_name;
+        regions.reserve(num_regions);
+        for(auto const &pair : list){
+            Region region(pair.first, pair.second);
+            region.customers.reserve(num_customers);
+            regions.push_back(region);
+        }
+    }
+    EnergyProvider &viewCustomersByProvince(string R_id){
+        for(auto const region : regions){
+            if(region.R_id == R_id){
+                for(auto const customer : region.customers){
+                    customer.second.printInfo();
+                }
+                break;
+            }
+        }
+        return (*this);
+    }
+    EnergyProvider &addNewCustomer(string R_id, string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        for(auto region : regions){
+            if(region.R_id == R_id){
+                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+                break;
+            }
+        }
+        return (*this);
+    }
+    EnergyProvider &removeCustomer(string C_id){
+        for(auto &region : regions){
+            if(region.customers.find(C_id) != region.customers.end()){
+                region.customers.erase(C_id);
+                break;
+            }
+        }
+        return (*this);
+    }
+    // only 5 elements therefore we dont need fancy data structure for lookup
+    vector<Region> regions;
 };
 
 class Bill {
