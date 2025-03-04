@@ -1,0 +1,3 @@
+Oil 1.0
+Solar 2.0
+Nuclear 3.0

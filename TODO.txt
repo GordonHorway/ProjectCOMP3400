@@ -1,14 +1,14 @@
 1. Manage Customer
-    1.1 Add New Customer
-    1.2 Remove Customer
-    1.3 View/Edit Customer // are you sure about the edit part
-    1.4 View Customers by Province
+    1.1 Add New Customer // done
+    1.2 Remove Customer // done
+    1.3 View/Edit Customer // half done
+    1.4 View Customers by Province // done
 
 2. Manage Prices
-    2.1 Display All Prices
-    2.2 Edit Oil Price
-    2.3 Edit Solar Price
-    2.4 Edit Nuclear Price
+    2.1 Display All Prices // done
+    2.2 Edit Oil Price // done
+    2.3 Edit Solar Price // done
+    2.4 Edit Nuclear Price // done
 
 3. Manage Orders
     3.1 Create Order
