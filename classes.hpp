@@ -7,8 +7,22 @@
 
 using namespace std;
 
-class Customer;
-class Region;
+class Customer {
+    public:
+    string C_id;
+    string C_name;
+    string C_address;
+    string C_phone;
+    string C_R_id;
+    Customer() = default;
+    Customer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        this->C_id = C_id;
+        this->C_name = C_name;
+        this->C_address = C_address;
+        this->C_phone = C_phone;
+        this->C_R_id = C_R_id;
+    }
+};
 
 class Region {
     public:
@@ -32,23 +46,6 @@ class EnergyProvider {
     }
     // only 5 elements therefore we dont need fancy data structure for lookup
     vector<Region> regions;
-};
-
-class Customer {
-    public:
-    string C_id;
-    string C_name;
-    string C_address;
-    string C_phone;
-    string C_R_id;
-    Customer() = default;
-    Customer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
-        this->C_id = C_id;
-        this->C_name = C_name;
-        this->C_address = C_address;
-        this->C_phone = C_phone;
-        this->C_R_id = C_R_id;
-    }
 };
 
 class Bill {
