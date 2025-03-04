@@ -2,7 +2,7 @@
 #define LIBRARY_H
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <initializer_list>
 
@@ -26,6 +26,13 @@ class Customer {
         this->C_phone = C_phone;
         this->C_R_id = C_R_id;
     }
+    void printInfo() const {
+        cout << "C_id : " << C_id << endl;
+        cout << "C_name : " << C_name << endl;
+        cout << "C_address : " << C_address << endl;
+        cout << "C_phone : " << C_phone << endl;
+        cout << "C_R_id : " << C_R_id << endl;
+    }
 };
 
 class Region {
@@ -39,6 +46,14 @@ class Region {
     }
     // using map instead of vector because lookup is way faster
     unordered_map<string, Customer> customers;
+    Region &addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+        return (*this);
+    }
+    Region &removeCustomer(string C_id){
+        customers.erase(C_id);
+        return (*this);
+    }
 };
 
 class EnergyProvider {
@@ -50,15 +65,36 @@ class EnergyProvider {
         this->E_name = E_name;
         regions.reserve(num_regions);
         for(auto const &pair : list){
-            regions.push_back(Region(pair.first, pair.second));
+            Region region(pair.first, pair.second);
+            region.customers.reserve(num_customers);
+            regions.push_back(region);
         }
     }
-    EnergyProvider &printRegions(){
+    EnergyProvider &viewCustomersByProvince(string R_id){
         for(auto const region : regions){
-            cout << region.R_id << endl;
-            cout << region.R_name << endl;
+            if(region.R_id == R_id){
+                for(auto const customer : region.customers){
+                    customer.second.printInfo();
+                }
+                break;
+            }
         }
-        return (*this);
+    }
+    void addNewCustomer(string R_id, string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        for(auto region : regions){
+            if(region.R_id == R_id){
+                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+                break;
+            }
+        }
+    }
+    void addNewCustomer(string R_name, string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        for(auto region : regions){
+            if(region.R_name == R_name){
+                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+                break;
+            }
+        }
     }
     // only 5 elements therefore we dont need fancy data structure for lookup
     vector<Region> regions;

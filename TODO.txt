@@ -1,0 +1,25 @@
+1. Manage Customer
+    1.1 Add New Customer
+    1.2 Remove Customer
+    1.3 View/Edit Customer
+    1.4 View Customers by Province
+
+2. Manage Prices
+    2.1 Display All Prices
+    2.2 Edit Oil Price
+    2.3 Edit Solar Price
+    2.4 Edit Nuclear Price
+
+3. Manage Orders
+    3.1 Create Order
+    3.2 Edit Order
+    3.3 Check-out Order
+
+4. Manage Bills
+    4.1 View Bills
+    4.2 Pay Bills
+    4.3 Check Unpaid Bills
+    4.4 Check Overdue Bills
+    4.5 View Customers with Unpaid Bills
+    4.6 View Customers with Overdue Bills
+

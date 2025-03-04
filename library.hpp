@@ -9,92 +9,47 @@ using namespace std;
 
 // function to clear standard input buffer
 // it is necessary
-void clear(){
-    int c;
-    while((c = getchar()) != '\n' && c != EOF)
-        continue;
-}
+void clear();
 
 // here we will add menu options
-void menu(){
-	cout << "1.) Print Regions" << endl;
-}
-
+void menu();
 // I overloaded all the validation functions
 
 // functions of this form are to be passed into another function as a function pointer
-string energyProviderID() {
-	return string("0[0-9]{3}");
-}
+string energyProviderID();
 
 // functions of this form are to be used for direct validation of a string
-bool energyProviderID(const string &input) {
-	return regex_match(input, regex{ "0[0-9]{3}" });
-}
+bool energyProviderID(const string &input);
 
-string provinceID() {
-	return string("1[0-9]{3}");
-}
+string provinceID();
 
-bool provinceID(const string& input) {
-	return regex_match(input, regex{ "1[0-9]{3}" });
-}
+bool provinceID(const string& input);
 
-string CustomerID() {
-	return string("2[0-9]{3}");
-}
+string CustomerID();
 
-bool customerID(const string& input) {
-	return regex_match(input, regex{ "2[0-9]{3}" });
-}
+bool customerID(const string& input);
 
-string BillingID() {
-	return string("3[0-9]{3}");
-}
+string BillingID();
 
-bool BillingID(const string& input) {
-	return regex_match(input, regex{ "3[0-9]{3}" });
-}
+bool BillingID(const string& input);
 
-string phoneNumber() {
-	return string("[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{10}");
-}
+string phoneNumber();
 
-bool phoneNumber(const string& input) {
-	return regex_match(input, regex{ "[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{10}" });
-}
+bool phoneNumber(const string& input);
 
-string number() {
-	return string("[+-]?(\\d+|(\\d*\\.\\d+)?)");
-}
+string number();
 
-bool number(const string &input) {
-	return regex_match(input, regex{ "[+-]?(\\d+|(\\d*\\.\\d+))" });
-}
+bool number(const string &input);
 
-string date(){
-    return string("(\\d{2}-(0?[1-9]|1[012])-\\d{4})|(0?[1-9]|1[012])-\\d{2}-\\d{4}");
-}
+string date();
 
-bool date(const string &input) {
-	return regex_match(input, regex{ "(\\d{2}-(0?[1-9]|1[012])-\\d{4})|(0?[1-9]|1[012])-\\d{2}-\\d{4}" });
-}
+bool date(const string &input);
 
-string name(){
-    return string("\\s*[a-zA-Z]+\\s+[a-zA-Z]+\\s*");
-}
+string name();
 
-bool name(const string& input) {
-	return regex_match(input, regex{ "\\s*[a-zA-Z]+\\s+[a-zA-Z]+\\s*" });
-}
+bool name(const string& input);
 
 // Second parameter is a function pointer to any of the regex functions of the form having the signature string identifier();
-void getField(string &input, const string (*re_ptr)()) {
-	do {
-		cout << "Enter field : ";
-		getline(cin, input);
-        clear();
-	} while (!regex_match(input, regex(re_ptr())));
-}
+void getField(string &input, const string (*re_ptr)());
 
 #endif
