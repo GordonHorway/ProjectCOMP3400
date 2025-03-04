@@ -43,8 +43,12 @@ bool customerID(const string& input) {
 	return regex_match(input, regex{ "2[0-9]{3}" });
 }
 
-bool BillingID(const string& input) {
+bool billingID(const string& input) {
 	return regex_match(input, regex{ "3[0-9]{3}" });
+}
+
+bool orderID(const string& input){
+	return regex_match(input, regex("4[0-9]{3}"));
 }
 
 bool phoneNumber(const string& input) {

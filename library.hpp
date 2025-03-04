@@ -20,7 +20,7 @@ bool provinceID(const string& input);
 
 bool customerID(const string& input);
 
-bool BillingID(const string& input);
+bool billingID(const string& input);
 
 bool phoneNumber(const string& input);
 
@@ -31,6 +31,8 @@ bool date(const string &input);
 bool name(const string& input);
 
 bool address(const string& input);
+
+bool orderID(const string& input);
 
 // Second parameter is a function pointer to any of the regex functions of the form having the signature string identifier();
 void getField(string &input,  bool (*re_ptr)(const string&), string prompt);

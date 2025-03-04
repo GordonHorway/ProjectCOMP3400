@@ -93,6 +93,18 @@ class Customer {
         cout << "C_phone : " << C_phone << endl;
         cout << "C_R_id : " << C_R_id << endl;
     }
+    void CreateOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
+        order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+        printOrderTest();
+    }
+    private:
+    void printOrderTest(){
+        cout << "O_id : " << order.O_id << endl;
+        cout << "O_C_id : " << order.O_C_id << endl;
+        cout << "oilCount : " << order.O_oilCount << endl;
+        cout << "solarCount : " << order.O_solarCount << endl;
+        cout << "O_nuclearCost : " << order.O_nuclearCost << endl;
+    }
 };
 
 class Region {
@@ -138,18 +150,19 @@ class EnergyProvider {
         inFile.close();
     }
     void displayAllPrices(){
-        cout << "Oil Price :     $" << oilPrice << endl;
-        cout << "Solar Price :   $" << solarPrice << endl;
-        cout << "Nuclear Price : $" << nuclearPrice << endl;
+        cout << "Oil Price :$" << oilPrice << endl;
+        cout << "Solar Price :$" << solarPrice << endl;
+        cout << "Nuclear Price :$" << nuclearPrice << endl;
     }
-    EnergyProvider &viewCustomer(string C_id){
+    bool viewCustomer(string C_id){
         for(auto const &region : regions){
             auto it = region.customers.find(C_id);
             if(it != region.customers.end()){
                 it->second.printInfo();
+                return true;
             }
         }
-        return (*this);
+        return false;
     }
     EnergyProvider &viewCustomersByProvince(string R_id){
         for(auto const &region : regions){
@@ -171,14 +184,15 @@ class EnergyProvider {
         }
         return (*this);
     }
-    EnergyProvider &removeCustomer(string C_id){
+    bool removeCustomer(string C_id){
         for(auto &region : regions){
             if(region.customers.find(C_id) != region.customers.end()){
                 region.customers.erase(C_id);
-                break;
+                return true;
             }
         }
-        return (*this);
+        cout << "Could not find customer" << endl;
+        return false;
     }
     bool editOilPrice(double newOilPrice){
         return newOilPrice > 0 ? (oilPrice = newOilPrice, true) : (cout << "price cannot be less than or equal to 0", false);
@@ -214,6 +228,15 @@ class EnergyProvider {
             cerr << "Error opening file..." << endl;
         }
         inFile.close();
+    }
+    bool createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
+        for(auto &region : regions){
+            if(region.customers.find(O_C_id) != region.customers.end()){
+                region.customers[O_C_id].CreateOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+                return true;
+            }
+        }
+        return false;
     }
     vector<Region> regions;
 };
