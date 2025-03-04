@@ -46,14 +46,6 @@ class Region {
     }
     // using map instead of vector because lookup is way faster
     unordered_map<string, Customer> customers;
-    Region &addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
-        customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
-        return (*this);
-    }
-    Region &removeCustomer(string C_id){
-        customers.erase(C_id);
-        return (*this);
-    }
 };
 
 class EnergyProvider {
@@ -79,22 +71,25 @@ class EnergyProvider {
                 break;
             }
         }
+        return (*this);
     }
-    void addNewCustomer(string R_id, string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+    EnergyProvider &addNewCustomer(string R_id, string C_id, string C_name, string C_address, string C_phone, string C_R_id){
         for(auto region : regions){
             if(region.R_id == R_id){
                 region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
                 break;
             }
         }
+        return (*this);
     }
-    void addNewCustomer(string R_name, string C_id, string C_name, string C_address, string C_phone, string C_R_id){
-        for(auto region : regions){
-            if(region.R_name == R_name){
-                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+    EnergyProvider &removeCustomer(string C_id){
+        for(auto &region : regions){
+            if(region.customers.find(C_id) != region.customers.end()){
+                region.customers.erase(C_id);
                 break;
             }
         }
+        return (*this);
     }
     // only 5 elements therefore we dont need fancy data structure for lookup
     vector<Region> regions;

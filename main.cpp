@@ -4,6 +4,9 @@
 
 int main(){
 
+    string R_id, R_name;
+    string C_id, C_name, C_address, C_phone, C_R_id;
+
     EnergyProvider energyProvider("0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
 
     // loop for menu in terminal
@@ -16,7 +19,7 @@ int main(){
         switch(choice){
             case 1:
                 case 11:
-                    
+
                 break;
                 case 12:
 
@@ -29,7 +32,18 @@ int main(){
                 break;
             break;
             case 2:
+                case 21:
 
+                break;
+                case 22:
+
+                break;
+                case 23:
+
+                break;
+                case 24:
+                    
+                break;
             break;
             case 3:
 

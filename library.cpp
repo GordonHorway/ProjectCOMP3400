@@ -20,6 +20,11 @@ void menu(){
 	cout << "	12.) Remove Customer" << endl;
 	cout << "	13.) View/Edit Customer" << endl;
 	cout << "	14.) View Customers by Province" << endl;
+    cout << "2.) Manage Prices" << endl;
+    cout << "   21.) Display All Prices" << endl;
+    cout << "   22.) Edit Oil Price" << endl;
+    cout << "   23.) Edit Solar Price" << endl;
+    cout << "   24.) Edit Nuclear Price" << endl;
 }
 
 // I overloaded all the validation functions

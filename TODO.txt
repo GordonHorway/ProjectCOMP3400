@@ -1,7 +1,7 @@
 1. Manage Customer
     1.1 Add New Customer
     1.2 Remove Customer
-    1.3 View/Edit Customer
+    1.3 View/Edit Customer // are you sure about the edit part
     1.4 View Customers by Province
 
 2. Manage Prices
