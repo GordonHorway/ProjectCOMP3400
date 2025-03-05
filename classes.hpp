@@ -7,6 +7,7 @@
 #include <initializer_list>
 #include <fstream>
 #include <sstream>
+#include "library.hpp"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ class Bill {
     string B_C_id;          // (Foreign Key) (CUSTOMER)
     string B_issueDate;
     string B_dueDate;      // (Calculated field -> Issue Date)
-    string B_overdue;
+    bool B_overdue;
     double B_balance;       // (Calculated field -> Counts x Costs)
     double B_amtPaid;
     double B_oilCount;
@@ -34,7 +35,7 @@ class Bill {
         string B_C_id,         
         string B_issueDate,
         string B_dueDate,   
-        string B_overdue,
+        bool B_overdue,
         double B_balance,       
         double B_amtPaid,
         double B_oilCount,
@@ -45,7 +46,7 @@ class Bill {
         double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
     Bill &billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
-        cout << B_dueDate << endl << B_overdue << endl << B_balance << endl;
+        cout << B_dueDate << endl << (B_overdue ? "Overdue" : "Not Overdue") << endl << B_balance << endl;
         cout << B_amtPaid << endl << B_oilCount << endl << B_solarCount << endl;
         cout << B_nuclearCount << endl << B_oilCost << endl << B_solarCost << endl << B_nuclearCost << endl;
         return (*this);
@@ -96,6 +97,37 @@ class Customer {
     void CreateOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
         order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
         printOrderTest();
+    }
+    void editOrder(){
+        int choice;
+        cout << "1.) O_id\n2.) O_C_id\n3.) Oil Count\n4.) Solar Count\n5.) Nuclear Count\n6.) Exit\n";
+        cout << "Enter number to edit field : ";
+        cin >> choice;
+        clear();
+        while(true){
+        switch(choice){
+            case 1:
+                getField(order.O_C_id, customerID, "Enter Customer ID : ");
+            break;
+            case 2:
+                getField(order.O_id, orderID, "Enter Order ID : ");
+            break;
+            case 3:
+                getField(order.O_nuclearCost, number, "Enter Nuclear Cost : ");
+            break;
+            case 4:
+                getField(order.O_oilCount, number, "Enter Oil Count : ");
+            break;
+            case 5:
+                getField(order.O_solarCount, number, "Enter Solar Count : ");
+            break;
+            case 6:
+            goto out;
+            default:
+                cout << "Not a valid choice" << endl;
+        }
+        }
+        out:;
     }
     private:
     void printOrderTest(){
@@ -233,6 +265,15 @@ class EnergyProvider {
         for(auto &region : regions){
             if(region.customers.find(O_C_id) != region.customers.end()){
                 region.customers[O_C_id].CreateOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+                return true;
+            }
+        }
+        return false;
+    }
+    bool editOrder(string customerID){
+        for(auto &region : regions){
+            if(region.customers.find(customerID) != region.customers.end()){
+                region.customers[customerID].editOrder();
                 return true;
             }
         }

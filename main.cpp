@@ -89,7 +89,11 @@ int main(int argc, char **argv){
                 }
             break;
             case 32:
-
+                getField(C_id, customerID, "Enter Customer ID : ");
+                isCustomer = energyProvider.editOrder(C_id);
+                if(!isCustomer){
+                    cout << "Could not find customer associated with this Customer ID" << endl;
+                }
             break;
             case 4:
 
