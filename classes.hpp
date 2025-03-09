@@ -107,10 +107,10 @@ class Customer {
         while(true){
         switch(choice){
             case 1:
-                getField(order.O_C_id, customerID, "Enter Customer ID : ");
+                getField(order.O_C_id, customerID, customerIDPrompt());
             break;
             case 2:
-                getField(order.O_id, orderID, "Enter Order ID : ");
+                getField(order.O_id, orderID, orderIDPrompt());
             break;
             case 3:
                 getField(order.O_nuclearCost, number, "Enter Nuclear Cost : ");
@@ -207,14 +207,17 @@ class EnergyProvider {
         }
         return (*this);
     }
-    EnergyProvider &addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+    bool addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
         for(auto &region : regions){
             if(region.R_id == C_R_id){
-                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+                if(region.customers.find(C_id) == region.customers.end()){
+                    region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+                    return true;
+                }
                 break;
             }
         }
-        return (*this);
+        return false;
     }
     bool removeCustomer(string C_id){
         for(auto &region : regions){
@@ -226,6 +229,7 @@ class EnergyProvider {
         cout << "Could not find customer" << endl;
         return false;
     }
+    // REFACTOR
     bool editOilPrice(double newOilPrice){
         return newOilPrice > 0 ? (oilPrice = newOilPrice, true) : (cout << "price cannot be less than or equal to 0", false);
     }
@@ -234,6 +238,20 @@ class EnergyProvider {
     }
     bool editNuclearPrice(double newNuclearPrice){
         return nuclearPrice > 0 ? (nuclearPrice = newNuclearPrice, true) : (cout << "price cannot be less than or equal to 0", false);
+    }
+    void updateFile(){
+        ofstream outFile;
+        outFile.open("customers.output");
+        if(!outFile){
+            cerr << "Error opening output file..." << endl;
+            return;
+        }
+        for(auto &region : regions){
+            for(auto &customer : region.customers){
+                outFile << customer.second.C_id << "," << customer.second.C_name << "," << customer.second.C_address << "," << customer.second.C_phone << "," << customer.second.C_R_id << endl;
+            }
+        }
+        outFile.close();
     }
     void readFile(){
         cout << "Enter name of file in current working directory : ";
@@ -259,6 +277,7 @@ class EnergyProvider {
         } else {
             cerr << "Error opening file..." << endl;
         }
+        cout << "File was successfully read from!" << endl;
         inFile.close();
     }
     bool createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
