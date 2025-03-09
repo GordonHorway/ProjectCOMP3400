@@ -10,16 +10,18 @@
     2.3 Edit Solar Price // done
     2.4 Edit Nuclear Price // done
 
+// maybe use SQl query for using the values of oil, solar, etc.
+
 3. Manage Orders
-    3.1 Create Order
-    3.2 Edit Order
-    3.3 Check-out Order
+    3.1 Create Order // done
+    3.2 Edit Order // done
+    3.3 Check-out Order // Bill is created here
 
 4. Manage Bills
-    4.1 View Bills
-    4.2 Pay Bills
-    4.3 Check Unpaid Bills
-    4.4 Check Overdue Bills
-    4.5 View Customers with Unpaid Bills
-    4.6 View Customers with Overdue Bills
+    4.1 View Bills // View all bills or the bill of a particular person??
+    4.2 Pay Bills 
+    4.3 Check Unpaid Bills // SQL
+    4.4 Check Overdue Bills // SQL
+    4.5 View Customers with Unpaid Bills // can be done entirely in SQL
+    4.6 View Customers with Overdue Bills // can be done entirely in SQL
 
