@@ -29,6 +29,8 @@ void menu(){
 	cout << "	31.) Create Order" << endl;
 	cout << "	32.) Edit Order" << endl;
 	cout << "	33.) Check-out Order" << endl;
+	cout << "4.) Manage Bills" << endl;
+	cout << "	41.) View Bills" << endl;
 	cout << "5.) Exit" << endl;
 }
 
@@ -102,6 +104,14 @@ bool address(const string& input){
 
 string addressPrompt(){
 	return string("Enter address (i.e DDDD or DDD (D is a digit) String String) : ");
+}
+
+bool fileName(const string& input){
+	return regex_match(input, regex{"\\w+\\.(txt|csv)"});
+}
+
+string filenamePrompt(){
+	return string("Enter name of file in current working directory with csv/txt extension : ");
 }
 
 void getField(string &input, bool (*re_ptr)(const string&), string prompt) {

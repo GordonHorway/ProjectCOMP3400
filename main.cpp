@@ -40,7 +40,7 @@ int main(int argc, char **argv){
             case 11:
                 getField(C_id, customerID, customerIDPrompt());
                 getField(C_Pr_id, provinceID, provinceIDPrompt());
-                isCustomer = energyProvider.hasCustomer(C_id, C_Pr_id);
+                isCustomer = energyProvider.hasCustomer(C_id);
                 if(!isCustomer){
                     getField(C_name, name, namePrompt());
                     getField(C_phone, phoneNumber, phoneNumberPrompt());
@@ -109,7 +109,15 @@ int main(int argc, char **argv){
                 }
             break;
             case 4:
-                
+                case 41:
+                    getField(C_id, customerID, customerIDPrompt());
+                    isCustomer = energyProvider.hasCustomer(C_id);
+                    if(isCustomer){
+                        energyProvider.printBill(C_id);
+                    } else {
+                        cout << "Could not find customer associated with this Customer ID" << endl;
+                    }
+                break;
             break;
             case 5:
                 energyProvider.updateFile();

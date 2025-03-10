@@ -50,6 +50,10 @@ bool orderID(const string& input);
 
 string orderIDPrompt();
 
+bool fileName(const string& input);
+
+string filenamePrompt();
+
 // Second parameter is a function pointer to any of the regex functions of the form having the signature string identifier();
 void getField(string &input,  bool (*re_ptr)(const string&), string prompt);
 

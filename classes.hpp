@@ -94,7 +94,7 @@ class Customer {
         cout << "C_phone : " << C_phone << endl;
         cout << "C_R_id : " << C_R_id << endl;
     }
-    void CreateOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
+    void createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
         order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
     }
     void editCustomerInfo(){
@@ -224,10 +224,10 @@ class EnergyProvider {
         }
         return (*this);
     }
-    bool hasCustomer(string C_id, string C_R_id){
+    bool hasCustomer(string customerID){
         for(auto &province : provinces){
-            if(province.P_id == C_R_id && province.customers.find(C_id) != province.customers.end()){
-                return  true;
+            if(province.customers.find(customerID) != province.customers.end()){
+                return true;
             }
         }
         return false;
@@ -247,7 +247,6 @@ class EnergyProvider {
                 return true;
             }
         }
-        cout << "Could not find customer" << endl;
         return false;
     }
     // REFACTOR
@@ -275,9 +274,8 @@ class EnergyProvider {
         outFile.close();
     }
     void readFile(){
-        cout << "Enter name of file in current working directory : ";
         string filename;
-        cin >> filename;
+        getField(filename, fileName, filenamePrompt());
         ifstream inFile(filename);
         if(inFile.is_open()){
         string line;
@@ -298,13 +296,12 @@ class EnergyProvider {
         } else {
             cerr << "Error opening file..." << endl;
         }
-        cout << "File was successfully read from!" << endl;
         inFile.close();
     }
     bool createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
         for(auto &province : provinces){
             if(province.customers.find(O_C_id) != province.customers.end()){
-                province.customers[O_C_id].CreateOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+                province.customers[O_C_id].createOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
                 return true;
             }
         }
@@ -327,6 +324,21 @@ class EnergyProvider {
             }
         }
         return false;
+    }
+    void checkoutOrder(string customerID){
+        if(!hasCustomer(customerID)){
+            cout << "Could not find Customer ID or Province ID" << endl;
+            return;
+        }
+        
+    }
+    void printBill(string customerID){
+        for(auto &province : provinces){
+           if(province.customers.find(customerID) != province.customers.end()){
+            province.customers[customerID].bill.billPrinter();
+            break;
+           }
+        }
     }
     vector<Province> provinces;
 };
