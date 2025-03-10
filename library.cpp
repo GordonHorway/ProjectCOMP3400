@@ -17,8 +17,9 @@ void menu(){
 	cout << "1.) Manage Customer" << endl;
 	cout << "	11.) Add New Customer" << endl;
 	cout << "	12.) Remove Customer" << endl;
-	cout << "	13.) View/Edit Customer" << endl;
-	cout << "	14.) View Customers by Province" << endl;
+	cout << "	13.) View Customer" << endl;
+	cout << "	14.) Edit Customer" << endl;
+	cout << "	15.) View Customers by Province" << endl;
     cout << "2.) Manage Prices" << endl;
     cout << "	21.) Display All Prices" << endl;
     cout << "	22.) Edit Oil Price" << endl;
@@ -28,6 +29,8 @@ void menu(){
 	cout << "	31.) Create Order" << endl;
 	cout << "	32.) Edit Order" << endl;
 	cout << "	33.) Check-out Order" << endl;
+	cout << "4.) Manage Bills" << endl;
+	cout << "	41.) View Bills" << endl;
 	cout << "5.) Exit" << endl;
 }
 
@@ -36,7 +39,7 @@ bool energyProviderID(const string &input) {
 }
 
 bool provinceID(const string& input) {
-	return regex_match(input, regex{ "1[0-9]{3}" });
+	return regex_match(input, regex{ "100[0-4]" });
 }
 
 string provinceIDPrompt(){
@@ -72,7 +75,7 @@ bool phoneNumber(const string& input) {
 }
 
 string phoneNumberPrompt(){
-	return string("");
+	return string("Enter Phone Number (i.e DDD-DDD-DDDD (D is a digit)) : ");
 }
 
 bool number(const string &input) {
@@ -84,19 +87,31 @@ bool date(const string &input) {
 }
 
 string datePrompt(){
-	return string("");
+	return string("Enter date (i.e DD-MM-YYYY OR MM-DD-YYYY) : ");
 }
 
 bool name(const string& input) {
 	return regex_match(input, regex{ "\\s*[a-zA-Z]+\\s+[a-zA-Z]+\\s*" });
 }
 
+string namePrompt(){
+	return string("Enter name (FirstName LastName) : ");
+}
+
 bool address(const string& input){
-	return regex_match(input, regex{"[0-9]{4}\\s+[a-zA-Z]+\\s+[a-zA-Z]+"});
+	return regex_match(input, regex{"([0-9]{4}|[0-9]{3})\\s+[a-zA-Z]+\\s+[a-zA-Z]+"});
 }
 
 string addressPrompt(){
-	return string("");
+	return string("Enter address (i.e DDDD or DDD (D is a digit) String String) : ");
+}
+
+bool fileName(const string& input){
+	return regex_match(input, regex{"\\w+\\.(txt|csv)"});
+}
+
+string filenamePrompt(){
+	return string("Enter name of file in current working directory with csv/txt extension : ");
 }
 
 void getField(string &input, bool (*re_ptr)(const string&), string prompt) {
