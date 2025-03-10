@@ -24,9 +24,11 @@ int main(int argc, char **argv){
 
     EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
 
+    cout << "Ontario Province ID : 1000\nQuebec Province ID : 1001\nAlberta Province ID : 1002\nManitoba Province ID : 1003\nSaskatchewan Province ID : 1004\n";
+
     // loop for menu in terminal
+    int choice;
     while(true){
-        int choice;
         menu();
         cout << "Enter choice : ";
         cin >> choice;
@@ -37,12 +39,14 @@ int main(int argc, char **argv){
             break;
             case 11:
                 getField(C_id, customerID, customerIDPrompt());
-                getField(C_name, name, "Enter Name : ");
-                getField(C_address, address, addressPrompt());
-                getField(C_phone, phoneNumber, phoneNumberPrompt());
                 getField(C_R_id, provinceID, provinceIDPrompt());
-                isCustomer = energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_R_id);
-                if(isCustomer){
+                isCustomer = energyProvider.hasCustomer(C_id, C_R_id);
+                if(!isCustomer){
+                    getField(C_name, name, namePrompt());
+                    getField(C_phone, phoneNumber, phoneNumberPrompt());
+                    getField(C_address, address, addressPrompt());
+                    energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_R_id);
+                } else {
                     cout << "Customer ID already exists" << endl;
                 }
             break;
@@ -61,6 +65,10 @@ int main(int argc, char **argv){
                 }
             break;
             case 14:
+                getField(C_id, customerID, customerIDPrompt());
+                energyProvider.editCustomerInfo(C_id);
+            break;
+            case 15:
                 getField(R_id, provinceID, provinceIDPrompt());
                 energyProvider.viewCustomersByProvince(R_id);
             break;
@@ -101,7 +109,7 @@ int main(int argc, char **argv){
                 }
             break;
             case 4:
-
+                
             break;
             case 5:
                 energyProvider.updateFile();

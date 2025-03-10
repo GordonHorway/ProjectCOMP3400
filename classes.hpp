@@ -98,31 +98,53 @@ class Customer {
         order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
         printOrderTest();
     }
-    void editOrder(){
+    void editCustomerInfo(){
         int choice;
-        cout << "1.) O_id\n2.) O_C_id\n3.) Oil Count\n4.) Solar Count\n5.) Nuclear Count\n6.) Exit\n";
+        while(true){
+        cout << "1.) Customer Name\n2.) Customer Address\n3.) Customer Phone Number\n4.) Customer Province ID\n5.) Exit\n";
         cout << "Enter number to edit field : ";
         cin >> choice;
         clear();
-        while(true){
         switch(choice){
             case 1:
-                getField(order.O_C_id, customerID, customerIDPrompt());
+                getField(C_name, name, namePrompt());
             break;
             case 2:
-                getField(order.O_id, orderID, orderIDPrompt());
+                getField(C_address, address, addressPrompt());
             break;
             case 3:
-                getField(order.O_nuclearCost, number, "Enter Nuclear Cost : ");
+                getField(C_phone, phoneNumber, phoneNumberPrompt());
             break;
             case 4:
-                getField(order.O_oilCount, number, "Enter Oil Count : ");
+                getField(C_R_id, provinceID, provinceIDPrompt());
             break;
             case 5:
+                goto out;
+            default:
+                cout << "Not a valid choice" << endl;
+        }
+        }
+        out:;
+    }
+    void editOrder(){
+        int choice;
+        while(true){
+        cout << "1.) Oil Count\n2.) Solar Count\n3.) Nuclear Count\n4.) Exit\n";
+        cout << "Enter number to edit field : ";
+        cin >> choice;
+        clear();
+        switch(choice){
+            case 1:
+                getField(order.O_nuclearCost, number, "Enter Nuclear Cost : ");
+            break;
+            case 2:
+                getField(order.O_oilCount, number, "Enter Oil Count : ");
+            break;
+            case 3:
                 getField(order.O_solarCount, number, "Enter Solar Count : ");
             break;
-            case 6:
-            goto out;
+            case 4:
+                goto out;
             default:
                 cout << "Not a valid choice" << endl;
         }
@@ -207,17 +229,21 @@ class EnergyProvider {
         }
         return (*this);
     }
-    bool addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+    bool hasCustomer(string C_id, string C_R_id){
         for(auto &region : regions){
-            if(region.R_id == C_R_id){
-                if(region.customers.find(C_id) == region.customers.end()){
-                    region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
-                    return true;
-                }
-                break;
+            if(region.R_id == C_R_id && region.customers.find(C_id) != region.customers.end()){
+                return  true;
             }
         }
         return false;
+    }
+    void addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        for(auto &region : regions){
+            if(region.R_id == C_R_id){
+                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+                break;
+            }
+        }
     }
     bool removeCustomer(string C_id){
         for(auto &region : regions){
@@ -293,6 +319,15 @@ class EnergyProvider {
         for(auto &region : regions){
             if(region.customers.find(customerID) != region.customers.end()){
                 region.customers[customerID].editOrder();
+                return true;
+            }
+        }
+        return false;
+    }
+    bool editCustomerInfo(string customerID){
+        for(auto &region : regions){
+            if(region.customers.find(customerID) != region.customers.end()){
+                region.customers[customerID].editCustomerInfo();
                 return true;
             }
         }

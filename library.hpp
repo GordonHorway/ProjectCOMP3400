@@ -40,6 +40,8 @@ string datePrompt();
 
 bool name(const string& input);
 
+string namePrompt();
+
 bool address(const string& input);
 
 string addressPrompt();
