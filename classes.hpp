@@ -11,7 +11,7 @@
 
 using namespace std;
 
-constexpr int num_regions = 5;
+constexpr int num_provinces = 5;
 constexpr int num_customers = 100;
 constexpr int num_energy_types = 3;
 
@@ -96,7 +96,6 @@ class Customer {
     }
     void CreateOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
         order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
-        printOrderTest();
     }
     void editCustomerInfo(){
         int choice;
@@ -151,24 +150,20 @@ class Customer {
         }
         out:;
     }
-    private:
-    void printOrderTest(){
-        cout << "O_id : " << order.O_id << endl;
-        cout << "O_C_id : " << order.O_C_id << endl;
-        cout << "oilCount : " << order.O_oilCount << endl;
-        cout << "solarCount : " << order.O_solarCount << endl;
-        cout << "O_nuclearCost : " << order.O_nuclearCost << endl;
+    // Bill is created here
+    void checkoutOrder(){
+
     }
 };
 
-class Region {
+class Province {
     public:
-    string R_id;
-    string R_name;
-    Region() = default;
-    Region(string R_id, string R_name){
-        this->R_id = R_id;
-        this->R_name = R_name;
+    string P_id;
+    string P_name;
+    Province() = default;
+    Province(string P_id, string P_name){
+        this->P_id = P_id;
+        this->P_name = P_name;
     }
     unordered_map<string, Customer> customers;
 };
@@ -183,10 +178,10 @@ class EnergyProvider {
     EnergyProvider(string filename, string E_id, string E_name, initializer_list<pair<string, string>> list){
         this->E_id = E_id;
         this->E_name = E_name;
-        regions.reserve(num_regions);
+        provinces.reserve(num_provinces);
         for(auto const &pair : list){
-            Region region(pair.first, pair.second);
-            regions.push_back(region);
+            Province province(pair.first, pair.second);
+            provinces.push_back(province);
         }
         /* 
            you can add database connection functionality
@@ -209,19 +204,19 @@ class EnergyProvider {
         cout << "Nuclear Price :$" << nuclearPrice << endl;
     }
     bool viewCustomer(string C_id){
-        for(auto const &region : regions){
-            auto it = region.customers.find(C_id);
-            if(it != region.customers.end()){
+        for(auto const &province : provinces){
+            auto it = province.customers.find(C_id);
+            if(it != province.customers.end()){
                 it->second.printInfo();
                 return true;
             }
         }
         return false;
     }
-    EnergyProvider &viewCustomersByProvince(string R_id){
-        for(auto const &region : regions){
-            if(region.R_id == R_id){
-                for(auto const &customer : region.customers){
+    EnergyProvider &viewCustomersByProvince(string P_id){
+        for(auto const &province : provinces){
+            if(province.P_id == P_id){
+                for(auto const &customer : province.customers){
                     customer.second.printInfo();
                 }
                 break;
@@ -230,25 +225,25 @@ class EnergyProvider {
         return (*this);
     }
     bool hasCustomer(string C_id, string C_R_id){
-        for(auto &region : regions){
-            if(region.R_id == C_R_id && region.customers.find(C_id) != region.customers.end()){
+        for(auto &province : provinces){
+            if(province.P_id == C_R_id && province.customers.find(C_id) != province.customers.end()){
                 return  true;
             }
         }
         return false;
     }
     void addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
-        for(auto &region : regions){
-            if(region.R_id == C_R_id){
-                region.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
+        for(auto &province : provinces){
+            if(province.P_id == C_R_id){
+                province.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
                 break;
             }
         }
     }
     bool removeCustomer(string C_id){
-        for(auto &region : regions){
-            if(region.customers.find(C_id) != region.customers.end()){
-                region.customers.erase(C_id);
+        for(auto &province : provinces){
+            if(province.customers.find(C_id) != province.customers.end()){
+                province.customers.erase(C_id);
                 return true;
             }
         }
@@ -272,8 +267,8 @@ class EnergyProvider {
             cerr << "Error opening output file..." << endl;
             return;
         }
-        for(auto &region : regions){
-            for(auto &customer : region.customers){
+        for(auto &province : provinces){
+            for(auto &customer : province.customers){
                 outFile << customer.second.C_id << "," << customer.second.C_name << "," << customer.second.C_address << "," << customer.second.C_phone << "," << customer.second.C_R_id << endl;
             }
         }
@@ -307,33 +302,33 @@ class EnergyProvider {
         inFile.close();
     }
     bool createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
-        for(auto &region : regions){
-            if(region.customers.find(O_C_id) != region.customers.end()){
-                region.customers[O_C_id].CreateOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+        for(auto &province : provinces){
+            if(province.customers.find(O_C_id) != province.customers.end()){
+                province.customers[O_C_id].CreateOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
                 return true;
             }
         }
         return false;
     }
     bool editOrder(string customerID){
-        for(auto &region : regions){
-            if(region.customers.find(customerID) != region.customers.end()){
-                region.customers[customerID].editOrder();
+        for(auto &province : provinces){
+            if(province.customers.find(customerID) != province.customers.end()){
+                province.customers[customerID].editOrder();
                 return true;
             }
         }
         return false;
     }
     bool editCustomerInfo(string customerID){
-        for(auto &region : regions){
-            if(region.customers.find(customerID) != region.customers.end()){
-                region.customers[customerID].editCustomerInfo();
+        for(auto &province : provinces){
+            if(province.customers.find(customerID) != province.customers.end()){
+                province.customers[customerID].editCustomerInfo();
                 return true;
             }
         }
         return false;
     }
-    vector<Region> regions;
+    vector<Province> provinces;
 };
 
 #endif

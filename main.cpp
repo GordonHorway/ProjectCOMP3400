@@ -10,7 +10,7 @@ int main(int argc, char **argv){
     }
 
     string R_id, R_name;
-    string C_id, C_name, C_address, C_phone, C_R_id;
+    string C_id, C_name, C_address, C_phone, C_Pr_id;
 
     string number_text;
 
@@ -39,13 +39,13 @@ int main(int argc, char **argv){
             break;
             case 11:
                 getField(C_id, customerID, customerIDPrompt());
-                getField(C_R_id, provinceID, provinceIDPrompt());
-                isCustomer = energyProvider.hasCustomer(C_id, C_R_id);
+                getField(C_Pr_id, provinceID, provinceIDPrompt());
+                isCustomer = energyProvider.hasCustomer(C_id, C_Pr_id);
                 if(!isCustomer){
                     getField(C_name, name, namePrompt());
                     getField(C_phone, phoneNumber, phoneNumberPrompt());
                     getField(C_address, address, addressPrompt());
-                    energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_R_id);
+                    energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_Pr_id);
                 } else {
                     cout << "Customer ID already exists" << endl;
                 }
