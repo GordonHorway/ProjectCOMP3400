@@ -31,6 +31,10 @@ void menu(){
 	cout << "	33.) Check-out Order" << endl;
 	cout << "4.) Manage Bills" << endl;
 	cout << "	41.) View Bills" << endl;
+	cout << "	43.) Check Unpaid Bills" << endl;
+	cout << "	44.) Check Overdue Bills" << endl;
+	cout << "	45.) View Customers with Unpaid Bills" << endl;
+	cout << "	46.) View Customers with Overdue Bills" << endl;
 	cout << "5.) Exit" << endl;
 }
 

@@ -118,6 +118,21 @@ int main(int argc, char **argv){
                         cout << "Could not find customer associated with this Customer ID" << endl;
                     }
                 break;
+                case 42:
+                    cout << "To be implemented by me..." << endl;
+                break;
+                case 43:
+                    cout << "To be done in SQL" << endl;
+                break;
+                case 44:
+                    cout << "To be done in SQL" << endl;
+                break;
+                case 45:
+                    cout << "To be done in SQL" << endl;
+                break;
+                case 46:
+                    cout << "To be done in SQL" << endl;
+                break;
             break;
             case 5:
                 energyProvider.updateFile();

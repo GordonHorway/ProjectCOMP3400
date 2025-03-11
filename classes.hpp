@@ -239,6 +239,7 @@ class EnergyProvider {
                 break;
             }
         }
+        // add to SQL database here
     }
     bool removeCustomer(string C_id){
         for(auto &province : provinces){
@@ -247,6 +248,7 @@ class EnergyProvider {
                 return true;
             }
         }
+        // remove from SQL database here
         return false;
     }
     // REFACTOR
@@ -271,9 +273,18 @@ class EnergyProvider {
                 outFile << customer.second.C_id << "," << customer.second.C_name << "," << customer.second.C_address << "," << customer.second.C_phone << "," << customer.second.C_R_id << endl;
             }
         }
+        /*
+        This update occurs right before exit and creates output 
+        of final customer information for the last run of the program.
+        No need to do anything in database, because the database is updated as the program runs.
+        */
         outFile.close();
     }
     void readFile(){
+        /*
+            Read file contents into database
+            Append to previous database instance or overwrite it everytime is up to you
+        */
         string filename;
         getField(filename, fileName, filenamePrompt());
         ifstream inFile(filename);
@@ -305,6 +316,7 @@ class EnergyProvider {
                 return true;
             }
         }
+        // Update in SQL database
         return false;
     }
     bool editOrder(string customerID){
@@ -314,6 +326,7 @@ class EnergyProvider {
                 return true;
             }
         }
+        // Update in SQL database
         return false;
     }
     bool editCustomerInfo(string customerID){
@@ -323,8 +336,10 @@ class EnergyProvider {
                 return true;
             }
         }
+        // Update in SQL database
         return false;
     }
+    // Need to finish...
     void checkoutOrder(string customerID){
         if(!hasCustomer(customerID)){
             cout << "Could not find Customer ID or Province ID" << endl;
