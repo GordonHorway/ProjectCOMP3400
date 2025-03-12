@@ -1,10 +1,16 @@
 #!/bin/bash
 
-# for the argument on the CLI put in the energy_prices.txt file
+ENERGYPRICES=$1
+TESTFILEDIRECTORY=${@:2}
 
-filename=$1
+g++ -std=c++20 -Wall -Wextra -Wold-style-cast -Werror -pedantic -O3 -march=native main.cpp library.cpp -o main
 
-clear
-g++ -std=c++20 -Wall -Wextra -Wold-style-cast -Werror -pedantic  -O3 -march=native main.cpp library.cpp -o main
-./main $filename
-echo "return value : "$?
+rm test_cases_output.txt
+for TESTFILE in $TESTFILEDIRECTORY
+do
+    ./main $ENERGYPRICES < $TESTFILE
+    if [ $? -eq 0 ]
+        then echo "$TESTFILE Success" >> test_cases_output.txt
+        else echo "$TESTFILE Failure" >> test_cases_output.txt
+    fi
+done

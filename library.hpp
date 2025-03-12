@@ -8,10 +8,8 @@
 using namespace std;
 
 // function to clear standard input buffer
-// it is necessary
 void clear();
 
-// here we will add menu options
 void menu();
 
 bool energyProviderID(const string &input);
@@ -33,10 +31,6 @@ bool phoneNumber(const string& input);
 string phoneNumberPrompt();
 
 bool number(const string &input);
-
-bool date(const string &input);
-
-string datePrompt();
 
 bool name(const string& input);
 

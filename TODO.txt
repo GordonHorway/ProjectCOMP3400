@@ -13,13 +13,13 @@
 // maybe use SQL query for using the values of oil, solar, etc.
 
 3. Manage Orders
-    3.1 Create Order // done
+    3.1 Create Order // done // make orderID random, check for uniqueness with SQL
     3.2 Edit Order // done
-    3.3 Check-out Order // Bill is created here
+    3.3 Check-out Order // Bill is created here // make billID random, check for uniqueness with SQL
 
 4. Manage Bills
-    4.1 View Bills // View all bills or the bill of a particular person??
-    4.2 Pay Bills 
+    4.1 View Bills // done
+    4.2 Pay Bills // done
     4.3 Check Unpaid Bills // SQL
     4.4 Check Overdue Bills // SQL
     4.5 View Customers with Unpaid Bills // can be done entirely in SQL
