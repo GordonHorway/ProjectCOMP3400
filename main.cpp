@@ -23,6 +23,7 @@ int main(int argc, char **argv){
     double O_nuclearCount;
 
     bool isCustomer;
+    bool isProvince;
     double amtPaid;
 
     EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
@@ -73,7 +74,10 @@ int main(int argc, char **argv){
             break;
             case 15:
                 getField(R_id, provinceID, provinceIDPrompt());
-                energyProvider.viewCustomersByProvince(R_id);
+                isProvince = energyProvider.viewCustomersByProvince(R_id);
+                if(!isProvince){
+                    cout << "Could not find province associated with this Province ID" << endl;
+                }
             break;
             case 21:
                 cout << "|Energy Prices|" << endl;

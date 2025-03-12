@@ -44,12 +44,11 @@ class Bill {
         double B_oilCost,    
         double B_solarCost,
         double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
-    Bill &billPrinter(){
+    void billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
         cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_balance : " << B_balance << endl;
         cout << "B_amtPaid : " << B_amtPaid << endl << "B_oilCount : " << B_oilCount << endl << "B_solarCount : " << B_solarCount << endl;
         cout << "B_nuclearCount : " << B_nuclearCount << endl << "B_oilCost : " << B_oilCost << endl << "B_solarCost : " << B_solarCost << endl << "B_nuclearCost : " << B_nuclearCost << endl;
-        return (*this);
     }
 };
 
@@ -167,9 +166,7 @@ class Customer {
     }
     void editOrder(){
         int choice;
-        string nuclearCountS;
-        string oilCountS;
-        string solarCountS;
+        string number_text;
         while(true){
         cout << "1.) Oil Count\n2.) Solar Count\n3.) Nuclear Count\n4.) Exit\n";
         cout << "Enter number to edit field : ";
@@ -177,16 +174,16 @@ class Customer {
         clear();
         switch(choice){
             case 1:
-                getField(nuclearCountS, number, "Enter Nuclear Cost : ");
-                order.O_nuclearCount = stod(nuclearCountS);
+                getField(number_text, number, "Enter Nuclear Cost : ");
+                order.O_nuclearCount = stod(number_text);
             break;
             case 2:
-                getField(oilCountS, number, "Enter Oil Count : ");
-                order.O_oilCount = stod(oilCountS);
+                getField(number_text, number, "Enter Oil Count : ");
+                order.O_oilCount = stod(number_text);
             break;
             case 3:
-                getField(solarCountS, number, "Enter Solar Count : ");
-                order.O_solarCount = stod(solarCountS);
+                getField(number_text, number, "Enter Solar Count : ");
+                order.O_solarCount = stod(number_text);
             break;
             case 4:
                 goto out;
@@ -255,16 +252,21 @@ class EnergyProvider {
         }
         return false;
     }
-    EnergyProvider &viewCustomersByProvince(string P_id){
+    bool viewCustomersByProvince(string P_id){
         for(auto const &province : provinces){
             if(province.P_id == P_id){
-                for(auto const &customer : province.customers){
-                    customer.second.printInfo();
+                if(province.customers.empty()){
+                    cout << "---<EMPTY>---" << endl;
                 }
-                break;
+                else {
+                    for(auto const &customer : province.customers){
+                        customer.second.printInfo();
+                    }
+                }
+                return true;
             }
         }
-        return (*this);
+        return false;
     }
     bool hasCustomer(string customerID){
         for(auto &province : provinces){

@@ -8,10 +8,8 @@
 using namespace std;
 
 // function to clear standard input buffer
-// it is necessary
 void clear();
 
-// here we will add menu options
 void menu();
 
 bool energyProviderID(const string &input);
