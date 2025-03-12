@@ -46,9 +46,9 @@ class Bill {
         double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
     Bill &billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
-        cout << B_dueDate << endl << (B_overdue ? "Overdue" : "Not Overdue") << endl << B_balance << endl;
-        cout << B_amtPaid << endl << B_oilCount << endl << B_solarCount << endl;
-        cout << B_nuclearCount << endl << B_oilCost << endl << B_solarCost << endl << B_nuclearCost << endl;
+        cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_balance : " << B_balance << endl;
+        cout << "B_amtPaid : " << B_amtPaid << endl << "B_oilCount : " << B_oilCount << endl << "B_solarCount : " << B_solarCount << endl;
+        cout << "B_nuclearCount : " << B_nuclearCount << endl << "B_oilCost : " << B_oilCost << endl << "B_solarCost : " << B_solarCost << endl << "B_nuclearCost : " << B_nuclearCost << endl;
         return (*this);
     }
 };
@@ -57,16 +57,16 @@ class Order {
     public:
     string O_id;            // (Primary Key)
     string O_C_id;          // (Foreign Key) (CUSTOMER)
-    string O_oilCount;
-    string O_solarCount;
-    string O_nuclearCost;
+    double O_oilCount;
+    double O_solarCount;
+    double O_nuclearCount;
     Order() = default;
-    Order(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
+    Order(string O_id, string O_C_id, double O_oilCount, double O_solarCount, double O_nuclearCount){
         this->O_id = O_id;
         this->O_C_id = O_C_id;
         this->O_oilCount = O_oilCount;
         this->O_solarCount = O_solarCount;
-        this->O_nuclearCost = O_nuclearCost;   
+        this->O_nuclearCount = O_nuclearCount;   
     }
 };
 
@@ -94,8 +94,48 @@ class Customer {
         cout << "C_phone : " << C_phone << endl;
         cout << "C_R_id : " << C_R_id << endl;
     }
-    void createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
-        order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+    // createOrder will give user option to edit order before checkout or to simply checkout the order
+    void createOrder(string O_id, string O_C_id, double O_oilCount, double O_solarCount, double O_nuclearCount, double O_oilCost, double O_solarCost, double O_nuclearCost){
+        order = Order(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCount);
+        int choice;
+        time_t timetoday;
+        time(&timetoday);
+        time_t dueDate = timetoday + (30 * 24 * 60 * 60);
+        struct tm* localTime = localtime(&timetoday);
+        stringstream ss;
+        while(true){
+            cout << "32.) Edit Order\n33.) Checkout Order\n";
+            cout << "Enter choice : ";
+            cin >> choice;
+            clear();
+            switch(choice){
+                case 32:
+                    editOrder();
+                break;
+                case 33:
+                   getField(bill.B_id, billingID, billingIDPrompt());
+                   bill.B_C_id = C_id;
+                   ss << (localTime->tm_mon + 1) << "-" << (localTime->tm_mday) << "-" << (localTime->tm_year + 1900);
+                   bill.B_issueDate = ss.str();
+                   localTime = localtime(&dueDate);
+                   ss.str("");
+                   ss << (localTime->tm_mon + 1) << "-" << (localTime->tm_mday) << "-" << (localTime->tm_year + 1900);
+                   bill.B_dueDate = ss.str();
+                   bill.B_overdue = false;
+                   bill.B_amtPaid = 0.0;
+                   bill.B_oilCount = order.O_oilCount;
+                   bill.B_nuclearCount = order.O_nuclearCount;
+                   bill.B_solarCount = order.O_solarCount;
+                   bill.B_nuclearCost = O_nuclearCost;
+                   bill.B_solarCost = O_solarCost;
+                   bill.B_oilCost = O_oilCost;
+                   bill.B_balance = bill.B_solarCost * bill.B_solarCount + bill.B_nuclearCost * bill.B_nuclearCount + bill.B_oilCost * bill.B_oilCount;
+                   goto out;
+                default:
+                    cout << "Not a valid choice!" << endl;
+            }
+        }
+        out:;
     }
     void editCustomerInfo(){
         int choice;
@@ -127,6 +167,9 @@ class Customer {
     }
     void editOrder(){
         int choice;
+        string nuclearCountS;
+        string oilCountS;
+        string solarCountS;
         while(true){
         cout << "1.) Oil Count\n2.) Solar Count\n3.) Nuclear Count\n4.) Exit\n";
         cout << "Enter number to edit field : ";
@@ -134,13 +177,16 @@ class Customer {
         clear();
         switch(choice){
             case 1:
-                getField(order.O_nuclearCost, number, "Enter Nuclear Cost : ");
+                getField(nuclearCountS, number, "Enter Nuclear Cost : ");
+                order.O_nuclearCount = stod(nuclearCountS);
             break;
             case 2:
-                getField(order.O_oilCount, number, "Enter Oil Count : ");
+                getField(oilCountS, number, "Enter Oil Count : ");
+                order.O_oilCount = stod(oilCountS);
             break;
             case 3:
-                getField(order.O_solarCount, number, "Enter Solar Count : ");
+                getField(solarCountS, number, "Enter Solar Count : ");
+                order.O_solarCount = stod(solarCountS);
             break;
             case 4:
                 goto out;
@@ -149,10 +195,6 @@ class Customer {
         }
         }
         out:;
-    }
-    // Bill is created here
-    void checkoutOrder(){
-
     }
 };
 
@@ -251,16 +293,24 @@ class EnergyProvider {
         // remove from SQL database here
         return false;
     }
-    // REFACTOR
-    bool editOilPrice(double newOilPrice){
-        return newOilPrice > 0 ? (oilPrice = newOilPrice, true) : (cout << "price cannot be less than or equal to 0", false);
+    void editOilPrice(double newOilPrice){
+        if(newOilPrice > 0)
+            oilPrice = newOilPrice;
+        else
+            cout << "price cannot be less than or equal to 0" << endl;
     }
-    bool editSolarPrice(double newSolarPrice){
-        return newSolarPrice > 0 ? (solarPrice = newSolarPrice, true) : (cout << "price cannot be less than or equal to 0", false);
-    }
-    bool editNuclearPrice(double newNuclearPrice){
-        return nuclearPrice > 0 ? (nuclearPrice = newNuclearPrice, true) : (cout << "price cannot be less than or equal to 0", false);
-    }
+    void editSolarPrice(double newSolarPrice){
+        if(newSolarPrice > 0)
+            oilPrice = newSolarPrice;
+        else
+            cout << "price cannot be less than or equal to 0" << endl;
+        }
+    void editNuclearPrice(double newNuclearPrice){
+        if(newNuclearPrice > 0)
+            oilPrice = newNuclearPrice;
+        else
+            cout << "price cannot be less than or equal to 0" << endl;
+        }
     void updateFile(){
         ofstream outFile;
         outFile.open("customers.output");
@@ -309,10 +359,10 @@ class EnergyProvider {
         }
         inFile.close();
     }
-    bool createOrder(string O_id, string O_C_id, string O_oilCount, string O_solarCount, string O_nuclearCost){
+    bool createOrder(string O_id, string O_C_id, double O_oilCount, double O_solarCount, double O_nuclearCount){
         for(auto &province : provinces){
             if(province.customers.find(O_C_id) != province.customers.end()){
-                province.customers[O_C_id].createOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+                province.customers[O_C_id].createOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCount, oilPrice, solarPrice, nuclearPrice);
                 return true;
             }
         }
@@ -339,14 +389,6 @@ class EnergyProvider {
         // Update in SQL database
         return false;
     }
-    // Need to finish...
-    void checkoutOrder(string customerID){
-        if(!hasCustomer(customerID)){
-            cout << "Could not find Customer ID or Province ID" << endl;
-            return;
-        }
-        
-    }
     void printBill(string customerID){
         for(auto &province : provinces){
            if(province.customers.find(customerID) != province.customers.end()){
@@ -354,6 +396,14 @@ class EnergyProvider {
             break;
            }
         }
+    }
+    void payBill(string customerID, double amt){
+        for(auto &province : provinces){
+            if(province.customers.find(customerID) != province.customers.end()){
+             province.customers[customerID].bill.B_balance -= amt;
+             break;
+            }
+         }
     }
     vector<Province> provinces;
 };

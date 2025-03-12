@@ -27,10 +27,11 @@ void menu(){
     cout << "	24.) Edit Nuclear Price" << endl;
 	cout << "3.) Manage Orders" << endl;
 	cout << "	31.) Create Order" << endl;
-	cout << "	32.) Edit Order" << endl;
-	cout << "	33.) Check-out Order" << endl;
+	cout << "		32.) Edit Order" << endl;
+	cout << "		33.) Check-out Order" << endl;
 	cout << "4.) Manage Bills" << endl;
 	cout << "	41.) View Bills" << endl;
+	cout << "	42.) Pay Bills" << endl;
 	cout << "	43.) Check Unpaid Bills" << endl;
 	cout << "	44.) Check Overdue Bills" << endl;
 	cout << "	45.) View Customers with Unpaid Bills" << endl;
@@ -84,14 +85,6 @@ string phoneNumberPrompt(){
 
 bool number(const string &input) {
 	return regex_match(input, regex{ "[+-]?(\\d+|(\\d*\\.\\d+))" });
-}
-
-bool date(const string &input) {
-	return regex_match(input, regex{ "(\\d{2}-(0?[1-9]|1[012])-\\d{4})|(0?[1-9]|1[012])-\\d{2}-\\d{4}" });
-}
-
-string datePrompt(){
-	return string("Enter date (i.e DD-MM-YYYY OR MM-DD-YYYY) : ");
 }
 
 bool name(const string& input) {

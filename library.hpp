@@ -34,10 +34,6 @@ string phoneNumberPrompt();
 
 bool number(const string &input);
 
-bool date(const string &input);
-
-string datePrompt();
-
 bool name(const string& input);
 
 string namePrompt();

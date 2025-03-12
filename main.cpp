@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdio>
+#include <ctime>
 #include "classes.hpp"
 #include "library.hpp"
 
@@ -16,11 +18,12 @@ int main(int argc, char **argv){
 
     string O_id;            // (Primary Key)
     string O_C_id;          // (Foreign Key) (CUSTOMER)
-    string O_oilCount;
-    string O_solarCount;
-    string O_nuclearCost;
+    double O_oilCount;
+    double O_solarCount;
+    double O_nuclearCount;
 
     bool isCustomer;
+    double amtPaid;
 
     EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
 
@@ -77,24 +80,27 @@ int main(int argc, char **argv){
                 energyProvider.displayAllPrices();
             break;
             case 22:
-                getField(number_text, number, "Enter number : ");
+                getField(number_text, number, "Enter new oil price : ");
                 energyProvider.editOilPrice(stod(number_text));
             break;
             case 23:
-                getField(number_text, number, "Enter number : ");
+                getField(number_text, number, "Enter new solar price : ");
                 energyProvider.editSolarPrice(stod(number_text));
             break;
             case 24:
-                getField(number_text, number, "Enter number : ");
+                getField(number_text, number, "Enter new nuclear price : ");
                 energyProvider.editNuclearPrice(stod(number_text));
             break;
             case 31:
                 getField(O_id, orderID, orderIDPrompt());
                 getField(O_C_id, customerID, customerIDPrompt());
-                getField(O_oilCount, number, "Enter Oil Count : ");
-                getField(O_solarCount, number, "Enter Solar Count : ");
-                getField(O_nuclearCost, number, "Enter Nuclear Cost : ");
-                isCustomer = energyProvider.createOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCost);
+                getField(number_text, number, "Enter Oil Count : ");
+                O_oilCount = stod(number_text);
+                getField(number_text, number, "Enter Solar Count : ");
+                O_solarCount = stod(number_text);
+                getField(number_text, number, "Enter Nuclear Count : ");
+                O_nuclearCount = stod(number_text);
+                isCustomer = energyProvider.createOrder(O_id, O_C_id, O_oilCount, O_solarCount, O_nuclearCount);
                 if(!isCustomer){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 } else {
@@ -119,7 +125,10 @@ int main(int argc, char **argv){
                     }
                 break;
                 case 42:
-                    cout << "To be implemented by me..." << endl;
+                    getField(C_id, customerID, customerIDPrompt());
+                    getField(number_text, number, "Enter amount to pay : ");
+                    amtPaid = stod(number_text);
+                    energyProvider.payBill(C_id, amtPaid);
                 break;
                 case 43:
                     cout << "To be done in SQL" << endl;
@@ -146,4 +155,6 @@ int main(int argc, char **argv){
     }catch(invalid_argument &e){
         cerr << e.what();
     }
+
+    return 0;
 }
