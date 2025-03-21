@@ -256,7 +256,7 @@ class EnergyProvider {
         for(auto const &province : provinces){
             if(province.P_id == P_id){
                 if(province.customers.empty()){
-                    cout << "---<EMPTY>---" << endl;
+                    cout << P_id << " : ---<EMPTY>---" << endl;
                 }
                 else {
                     for(auto const &customer : province.customers){

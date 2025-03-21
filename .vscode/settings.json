@@ -3,6 +3,9 @@
         "map": "cpp",
         "fstream": "cpp",
         "regex": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "__hash_table": "cpp",
+        "unordered_map": "cpp",
+        "list": "cpp"
     }
 }
