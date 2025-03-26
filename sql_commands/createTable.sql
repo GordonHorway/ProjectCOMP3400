@@ -1,6 +1,6 @@
 CREATE TABLE REGIONS (
     R_id INT PRIMARY KEY,
-    R_name INT
+    R_name VARCHAR(30);
 );
 
 CREATE TABLE CUSTOMERS (
