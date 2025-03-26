@@ -45,10 +45,10 @@ class Bill {
         double B_nuclearCount,
         double B_oilCost,    
         double B_solarCost,
-        double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
+        double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_pd{B_pd}, B_overdue{B_overdue}, B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
     void billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
-        cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_balance : " << B_balance << endl;
+        cout << "B_dueDate : " << B_dueDate << endl << "B_pd : " << (B_pd ? "Paid" : "Not Paid") << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_balance : " << B_balance << endl;
         cout << "B_amtPaid : " << B_amtPaid << endl << "B_oilCount : " << B_oilCount << endl << "B_solarCount : " << B_solarCount << endl;
         cout << "B_nuclearCount : " << B_nuclearCount << endl << "B_oilCost : " << B_oilCost << endl << "B_solarCost : " << B_solarCost << endl << "B_nuclearCost : " << B_nuclearCost << endl;
     }
