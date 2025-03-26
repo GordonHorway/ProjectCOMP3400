@@ -4,7 +4,7 @@ INSERT INTO REGION (R_id, R_name) VALUES
 (1002, 'Quebec'),
 (1003, 'Alberta'),
 (1004, 'Manitoba'),
-(1005, 'Nunavut');
+(1005, 'Saskatchewan');
 
 -- Populate CUSTOMERS table
 INSERT INTO CUSTOMER (C_id, C_name, C_phone) VALUES
