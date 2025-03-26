@@ -27,8 +27,8 @@ void menu(){
     cout << "	24.) Edit Nuclear Price" << endl;
 	cout << "3.) Manage Orders" << endl;
 	cout << "	31.) Create Order" << endl;
-	cout << "		32.) Edit Order" << endl;
-	cout << "		33.) Check-out Order" << endl;
+	cout << "	32.) Edit Order" << endl;
+	cout << "	33.) Check-out Order" << endl;
 	cout << "4.) Manage Bills" << endl;
 	cout << "	41.) View Bills" << endl;
 	cout << "	42.) Pay Bills" << endl;
