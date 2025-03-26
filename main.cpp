@@ -42,7 +42,7 @@ int main(int argc, char **argv){
             case 0:
                 energyProvider.readFile();
             break;
-            case 11:
+            case 11:    // Add New Customer
                 getField(C_id, customerID, customerIDPrompt());
                 getField(C_Pr_id, provinceID, provinceIDPrompt());
                 isCustomer = energyProvider.hasCustomer(C_id);
@@ -55,48 +55,48 @@ int main(int argc, char **argv){
                     cout << "Customer ID already exists" << endl;
                 }
             break;
-            case 12:
+            case 12:    // Remove Customer
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.removeCustomer(C_id);
                 if(!isCustomer){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
-            case 13:
+            case 13:    // View Customer
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.viewCustomer(C_id);
                 if(!isCustomer){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
-            case 14:
+            case 14:    // Edit Customer
                 getField(C_id, customerID, customerIDPrompt());
                 energyProvider.editCustomerInfo(C_id);
             break;
-            case 15:
+            case 15:    // View Customers by Province
                 getField(R_id, provinceID, provinceIDPrompt());
                 isProvince = energyProvider.viewCustomersByProvince(R_id);
                 if(!isProvince){
                     cout << "Could not find province associated with this Province ID" << endl;
                 }
             break;
-            case 21:
+            case 21:    // Display All Prices
                 cout << "|Energy Prices|" << endl;
                 energyProvider.displayAllPrices();
             break;
-            case 22:
+            case 22:    // Edit Oil Price
                 getField(number_text, number, "Enter new oil price : ");
                 energyProvider.editOilPrice(stod(number_text));
             break;
-            case 23:
+            case 23:    // Edit Solar Price
                 getField(number_text, number, "Enter new solar price : ");
                 energyProvider.editSolarPrice(stod(number_text));
             break;
-            case 24:
+            case 24:    // Edit Nuclear Price
                 getField(number_text, number, "Enter new nuclear price : ");
                 energyProvider.editNuclearPrice(stod(number_text));
             break;
-            case 31:
+            case 31:    // Create Order
                 getField(O_id, orderID, orderIDPrompt());
                 getField(O_C_id, customerID, customerIDPrompt());
                 getField(number_text, number, "Enter Oil Count : ");
@@ -112,43 +112,42 @@ int main(int argc, char **argv){
                     cout << "Order Success!" << endl;
                 }
             break;
-            case 32:
+            case 32:    // Edit Order
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.editOrder(C_id);
                 if(!isCustomer){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
-            case 4:
-                case 41:
-                    getField(C_id, customerID, customerIDPrompt());
-                    isCustomer = energyProvider.hasCustomer(C_id);
-                    if(isCustomer){
-                        energyProvider.printBill(C_id);
-                    } else {
-                        cout << "Could not find customer associated with this Customer ID" << endl;
-                    }
-                break;
-                case 42:
-                    getField(C_id, customerID, customerIDPrompt());
-                    getField(number_text, number, "Enter amount to pay : ");
-                    amtPaid = stod(number_text);
-                    energyProvider.payBill(C_id, amtPaid);
-                break;
-                case 43:
-                    cout << "To be done in SQL" << endl;
-                break;
-                case 44:
-                    cout << "To be done in SQL" << endl;
-                break;
-                case 45:
-                    cout << "To be done in SQL" << endl;
-                break;
-                case 46:
-                    cout << "To be done in SQL" << endl;
-                break;
+            case 41:    // View Bills
+                getField(C_id, customerID, customerIDPrompt());
+                isCustomer = energyProvider.hasCustomer(C_id);
+                if(isCustomer){
+                    energyProvider.printBill(C_id);
+                } else {
+                    cout << "Could not find customer associated with this Customer ID" << endl;
+                }
             break;
-            case 5:
+            case 42:    // Pay Bills
+                getField(C_id, customerID, customerIDPrompt());
+                getField(number_text, number, "Enter amount to pay : ");
+                amtPaid = stod(number_text);
+                energyProvider.payBill(C_id, amtPaid);
+            break;
+            case 43:    // Check Unpaid Bills
+                cout << "To be done in SQL" << endl;
+            break;
+            case 44:    // Check Overdue Bills
+                cout << "To be done in SQL" << endl;
+            break;
+            case 45:    // View Customers with Unpaid Bills
+                cout << "To be done in SQL" << endl;
+            break;
+            case 46:    // View Customers with Overdue Bills
+                cout << "To be done in SQL" << endl;
+            break;
+            
+            case 5:    // Exit
                 energyProvider.updateFile();
                 cout << "Goodbye!" << endl;
                 exit(EXIT_SUCCESS);
