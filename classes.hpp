@@ -21,6 +21,7 @@ class Bill {
     string B_C_id;          // (Foreign Key) (CUSTOMER)
     string B_issueDate;
     string B_dueDate;      // (Calculated field -> Issue Date)
+    bool B_pd;
     bool B_overdue;
     double B_balance;       // (Calculated field -> Counts x Costs)
     double B_amtPaid;
@@ -34,7 +35,8 @@ class Bill {
     Bill(string B_id,          
         string B_C_id,         
         string B_issueDate,
-        string B_dueDate,   
+        string B_dueDate,
+        bool B_pd,   
         bool B_overdue,
         double B_balance,       
         double B_amtPaid,
