@@ -29,7 +29,7 @@ int main(int argc, char **argv){
 
         EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
 
-        cout << "Ontario Province ID : 1001\nQuebec Province ID : 1002\nAlberta Province ID : 1003\nManitoba Province ID : 1004\nNunavut Province ID : 1005\n";
+        cout << "Ontario Province ID : 1001 | Quebec Province ID : 1002 | Alberta Province ID : 1003 | Manitoba Province ID : 1004 | Nunavut Province ID : 1005\n";
 
         // loop for menu in terminal
         int choice;
