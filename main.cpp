@@ -75,7 +75,9 @@ int main(int argc, char **argv){
 
             case 14:    // Edit Customer
                 getField(C_id, customerID, customerIDPrompt());
-                energyProvider.editCustomerInfo(C_id);
+                if(!(isCustomer = energyProvider.editCustomerInfo(C_id))){
+                    cout << "Could not find customer associated with this Customer ID" << endl;
+                }
             break;
             case 15: 
                // View Customers by Province
