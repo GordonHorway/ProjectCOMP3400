@@ -42,6 +42,7 @@ int main(int argc, char **argv){
             case 0:
                 energyProvider.readFile();
             break;
+
             case 11:    // Add New Customer
                 getField(C_id, customerID, customerIDPrompt());
                 getField(C_Pr_id, provinceID, provinceIDPrompt());
@@ -55,6 +56,7 @@ int main(int argc, char **argv){
                     cout << "Customer ID already exists" << endl;
                 }
             break;
+
             case 12:    // Remove Customer
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.removeCustomer(C_id);
@@ -62,6 +64,7 @@ int main(int argc, char **argv){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
+
             case 13:    // View Customer
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.viewCustomer(C_id);
@@ -69,33 +72,40 @@ int main(int argc, char **argv){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
+
             case 14:    // Edit Customer
                 getField(C_id, customerID, customerIDPrompt());
                 energyProvider.editCustomerInfo(C_id);
             break;
-            case 15:    // View Customers by Province
+            case 15: 
+               // View Customers by Province
                 getField(R_id, provinceID, provinceIDPrompt());
                 isProvince = energyProvider.viewCustomersByProvince(R_id);
                 if(!isProvince){
                     cout << "Could not find province associated with this Province ID" << endl;
                 }
             break;
+
             case 21:    // Display All Prices
                 cout << "|Energy Prices|" << endl;
                 energyProvider.displayAllPrices();
             break;
+
             case 22:    // Edit Oil Price
                 getField(number_text, number, "Enter new oil price : ");
                 energyProvider.editOilPrice(stod(number_text));
             break;
+
             case 23:    // Edit Solar Price
                 getField(number_text, number, "Enter new solar price : ");
                 energyProvider.editSolarPrice(stod(number_text));
             break;
+
             case 24:    // Edit Nuclear Price
                 getField(number_text, number, "Enter new nuclear price : ");
                 energyProvider.editNuclearPrice(stod(number_text));
             break;
+
             case 31:    // Create Order
                 getField(O_id, orderID, orderIDPrompt());
                 getField(O_C_id, customerID, customerIDPrompt());
@@ -119,6 +129,7 @@ int main(int argc, char **argv){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
+
             case 41:    // View Bills
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.hasCustomer(C_id);
@@ -128,21 +139,26 @@ int main(int argc, char **argv){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
+
             case 42:    // Pay Bills
                 getField(C_id, customerID, customerIDPrompt());
                 getField(number_text, number, "Enter amount to pay : ");
                 amtPaid = stod(number_text);
                 energyProvider.payBill(C_id, amtPaid);
             break;
+
             case 43:    // Check Unpaid Bills
                 cout << "To be done in SQL" << endl;
             break;
+
             case 44:    // Check Overdue Bills
                 cout << "To be done in SQL" << endl;
             break;
+
             case 45:    // View Customers with Unpaid Bills
                 cout << "To be done in SQL" << endl;
             break;
+            
             case 46:    // View Customers with Overdue Bills
                 cout << "To be done in SQL" << endl;
             break;
