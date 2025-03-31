@@ -1,5 +1,5 @@
 -- Populate REGIONS table
-INSERT INTO REGION (R_id, R_name) VALUES
+INSERT INTO REGIONS (R_id, R_name) VALUES
 (1001, 'Ontario'),
 (1002, 'Quebec'),
 (1003, 'Alberta'),
@@ -7,7 +7,7 @@ INSERT INTO REGION (R_id, R_name) VALUES
 (1005, 'Nunavut');
 
 -- Populate CUSTOMERS table
-INSERT INTO CUSTOMER (C_id, C_name, C_phone) VALUES
+INSERT INTO CUSTOMERS (C_id, C_name, C_phone, C_R_id) VALUES
 (2001, 'Liam Anderson', '1234562001', 1001),
 (2002, 'Olivia Martinez', '1234562002', 1001),
 (2003, 'Noah Taylor', '1234562003', 1001),
@@ -308,7 +308,7 @@ INSERT INTO CUSTOMER (C_id, C_name, C_phone) VALUES
 (2297, 'Sophia Twisterspark', '1234562297', 1003),
 (2298, 'Max Jellyflip', '1234562298', 1003),
 (2299, 'Wyatt Wobblehopper', '1234562299', 1003),
-(2300, 'Harper Wobblewhisk', '1234562300', 1003);
+(2300, 'Harper Wobblewhisk', '1234562300', 1003),
 
 (2301, 'Billy Boobie', '1234562301', 1004),
 (2302, 'Ziggy Nutbuster', '1234562302', 1004),
@@ -409,7 +409,7 @@ INSERT INTO CUSTOMER (C_id, C_name, C_phone) VALUES
 (2397, 'Laura Ziggler', '1234562397', 1004),
 (2398, 'Marty Jigglenut', '1234562398', 1004),
 (2399, 'Sadie Dimpleton', '1234562399', 1004),
-(2400, 'Ollie Bumblebutt', '1234562400', 1004);
+(2400, 'Ollie Bumblebutt', '1234562400', 1004),
 
 (2401, 'Jerry Jones', '1234562401', 1005),
 (2402, 'Maggie Snickerdoodle', '1234562402', 1005),
