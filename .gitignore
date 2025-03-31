@@ -13,6 +13,7 @@ test_cases.output
 customers.output
 input.txt
 main
+run_gcc.sh
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
