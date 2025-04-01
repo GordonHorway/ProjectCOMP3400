@@ -44,7 +44,7 @@ bool energyProviderID(const string &input) {
 }
 
 bool provinceID(const string& input) {
-	return regex_match(input, regex{ "100[0-4]" });
+	return regex_match(input, regex{ "100[0-5]" });
 }
 
 string provinceIDPrompt(){
