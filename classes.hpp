@@ -261,6 +261,7 @@ class EnergyProvider {
                 else {
                     for(auto const &customer : province.customers){
                         customer.second.printInfo();
+                        cout << endl;
                     }
                 }
                 return true;
