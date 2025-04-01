@@ -276,17 +276,16 @@ int main(int argc, char **argv){
             
                     // Iterate through the CUSTOMERS map and find customers in the specified province
                     bool found = false;
-                    for (const auto &entry : CUSTOMERS) {
-                        const Customer &customer = entry.second;
-                        if (customer.C_R_id == R_id) {
+                    for (const auto& [id, cust] : CUSTOMERS) {
+                        if (cust.C_R_id == R_id) {
                             found = true;
-                            cout << "---------------------------------" << endl;
-                            cout << "Customer Details:" << endl;
-                            cout << "ID: " << customer.C_id << endl;
-                            cout << "Name: " << customer.C_name << endl;
-                            cout << "Address: " << customer.C_address << endl;
-                            cout << "Phone: " << customer.C_phone << endl;
-                            cout << "Region ID: " << customer.C_R_id << endl;
+                            std::cout << "---------------------------------" << std::endl;
+                            std::cout << "Customer Details:" << std::endl;
+                            std::cout << "ID: " << cust.C_id << std::endl;
+                            std::cout << "Name: " << cust.C_name << std::endl;
+                            std::cout << "Address: " << cust.C_address << std::endl;
+                            std::cout << "Phone: " << cust.C_phone << std::endl;
+                            std::cout << "Region ID: " << cust.C_R_id << std::endl;
                         }
                     }
             
