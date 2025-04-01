@@ -107,14 +107,20 @@ int main(int argc, char **argv){
         std::stringstream ss(line);
         std::string firstValue;
         std::getline(ss, firstValue, ',');
-
+    
         int id = std::stoi(firstValue);
-
+    
         if (id >= 1000 && id < 2000) {
             // Process as a REGION
             std::string R_name;
             std::getline(ss, R_name, ',');
             addREGION(REGIONS, firstValue, R_name);
+    
+            // Print confirmation
+            cout << "Added Region: " << endl;
+            cout << "ID: " << firstValue << ", Name: " << R_name << endl;
+            cout << "---------------------------------" << endl;
+    
         } else if (id >= 2000 && id < 3000) {
             // Process as a CUSTOMER
             std::string C_name, C_phone, C_R_id;
@@ -122,12 +128,19 @@ int main(int argc, char **argv){
             std::getline(ss, C_phone, ',');
             std::getline(ss, C_R_id, ',');
             addCUSTOMER(CUSTOMERS, firstValue, C_name, "", C_phone, C_R_id);
+    
+            // Print confirmation
+            cout << "Added Customer: " << endl;
+            cout << "ID: " << firstValue << ", Name: " << C_name << endl;
+            cout << "Phone: " << C_phone << ", Region ID: " << C_R_id << endl;
+            cout << "---------------------------------" << endl;
+    
         } else if (id >= 3000 && id < 4000) {
             // Process as a BILL
             std::string B_C_id, B_issueDate, B_dueDate;
             bool B_overdue;
             double B_balance, B_amtPaid, B_oilCount, B_solarCount, B_nuclearCount, B_oilCost, B_solarCost, B_nuclearCost;
-
+    
             std::getline(ss, B_C_id, ',');
             std::getline(ss, B_issueDate, ',');
             std::getline(ss, B_dueDate, ',');
@@ -148,8 +161,19 @@ int main(int argc, char **argv){
             ss >> B_solarCost;
             ss.ignore(1, ',');
             ss >> B_nuclearCost;
-
+    
             addBILL(BILLS, firstValue, B_C_id, B_issueDate, B_dueDate, B_overdue, B_balance, B_amtPaid, B_oilCount, B_solarCount, B_nuclearCount, B_oilCost, B_solarCost, B_nuclearCost);
+    
+            // Print confirmation
+            cout << "Added Bill: " << endl;
+            cout << "ID: " << firstValue << ", Customer ID: " << B_C_id << endl;
+            cout << "Issue Date: " << B_issueDate << ", Due Date: " << B_dueDate << endl;
+            cout << "Overdue: " << (B_overdue ? "Yes" : "No") << ", Balance: $" << B_balance << endl;
+            cout << "Amount Paid: $" << B_amtPaid << endl;
+            cout << "Oil Count: " << B_oilCount << ", Solar Count: " << B_solarCount << ", Nuclear Count: " << B_nuclearCount << endl;
+            cout << "Oil Cost: $" << B_oilCost << ", Solar Cost: $" << B_solarCost << ", Nuclear Cost: $" << B_nuclearCost << endl;
+            cout << "---------------------------------" << endl;
+    
         } else {
             std::cerr << "Error: Invalid ID range in line: " << line << std::endl;
         }
@@ -178,7 +202,8 @@ int main(int argc, char **argv){
                     getField(C_name, name, namePrompt());
                     getField(C_phone, phoneNumber, phoneNumberPrompt());
                     getField(C_address, address, addressPrompt());
-                    energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_Pr_id);
+                    // energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_Pr_id); // Old addition method
+                    addCUSTOMER(CUSTOMERS, C_id, C_name, C_address, C_phone, C_Pr_id);
                 } else {
                     cout << "Customer ID already exists" << endl;
                 }
@@ -192,22 +217,80 @@ int main(int argc, char **argv){
             break;
             case 13:    // View Customer
                 getField(C_id, customerID, customerIDPrompt());
-                isCustomer = energyProvider.viewCustomer(C_id);
-                if(!isCustomer){
+            
+                // Check if the customer exists in the map
+                if (CUSTOMERS.find(C_id) != CUSTOMERS.end()) {
+                    // Retrieve the customer
+                    const Customer &customer = CUSTOMERS[C_id];
+            
+                    // Display customer details
+                    cout << "Customer Details:" << endl;
+                    cout << "ID: " << customer.C_id << endl;
+                    cout << "Name: " << customer.C_name << endl;
+                    cout << "Address: " << customer.C_address << endl;
+                    cout << "Phone: " << customer.C_phone << endl;
+                    cout << "Region ID: " << customer.C_R_id << endl;
+                } else {
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
             case 14:    // Edit Customer
                 getField(C_id, customerID, customerIDPrompt());
-                if(!(isCustomer = energyProvider.editCustomerInfo(C_id))){
+            
+                // Check if the customer exists in the map
+                if (CUSTOMERS.find(C_id) != CUSTOMERS.end()) {
+                    // Retrieve the customer
+                    Customer &customer = CUSTOMERS[C_id];
+            
+                    // Print current customer details
+                    cout << "Current Customer Details:" << endl;
+                    cout << "ID: " << customer.C_id << endl;
+                    cout << "Name: " << customer.C_name << endl;
+                    cout << "Address: " << customer.C_address << endl;
+                    cout << "Phone: " << customer.C_phone << endl;
+                    cout << "Region ID: " << customer.C_R_id << endl;
+            
+                    // Prompt for updated information
+                    cout << "\nEnter updated information for this customer:" << endl;
+                    getField(customer.C_name, name, "Enter new name: ");
+                    getField(customer.C_address, address, "Enter new address: ");
+                    getField(customer.C_phone, phoneNumber, "Enter new phone number: ");
+                    getField(customer.C_R_id, provinceID, "Enter new region ID: ");
+            
+                    // Confirmation message
+                    cout << "Customer information updated successfully!" << endl;
+                } else {
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
-            break;
-            case 15: 
-               // View Customers by Province
+            break;    
+
+            case 15:    // View Customers by Province
                 getField(R_id, provinceID, provinceIDPrompt());
-                isProvince = energyProvider.viewCustomersByProvince(R_id);
-                if(!isProvince){
+            
+                // Check if the province exists in the REGIONS map
+                if (REGIONS.find(std::stoi(R_id)) != REGIONS.end()) {
+                    cout << "Customers in Province: " << REGIONS[std::stoi(R_id)] << endl;
+            
+                    // Iterate through the CUSTOMERS map and find customers in the specified province
+                    bool found = false;
+                    for (const auto &entry : CUSTOMERS) {
+                        const Customer &customer = entry.second;
+                        if (customer.C_R_id == R_id) {
+                            found = true;
+                            cout << "---------------------------------" << endl;
+                            cout << "Customer Details:" << endl;
+                            cout << "ID: " << customer.C_id << endl;
+                            cout << "Name: " << customer.C_name << endl;
+                            cout << "Address: " << customer.C_address << endl;
+                            cout << "Phone: " << customer.C_phone << endl;
+                            cout << "Region ID: " << customer.C_R_id << endl;
+                        }
+                    }
+            
+                    if (!found) {
+                        cout << "No customers found in this province." << endl;
+                    }
+                } else {
                     cout << "Could not find province associated with this Province ID" << endl;
                 }
             break;
