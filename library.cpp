@@ -44,7 +44,7 @@ bool energyProviderID(const string &input) {
 }
 
 bool provinceID(const string& input) {
-	return regex_match(input, regex{ "100[0-4]" });
+	return regex_match(input, regex{ "100[0-5]" });
 }
 
 string provinceIDPrompt(){
@@ -104,11 +104,11 @@ string addressPrompt(){
 }
 
 bool fileName(const string& input){
-	return regex_match(input, regex{"\\w+\\.(txt|csv)"});
+	return regex_match(input, regex{"\\w+\\.input"});
 }
 
 string filenamePrompt(){
-	return string("Enter name of file in current working directory with csv/txt extension : ");
+	return string("Enter name of file in current working directory with .input extension : ");
 }
 
 void getField(string &input, bool (*re_ptr)(const string&), string prompt) {

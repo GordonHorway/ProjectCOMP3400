@@ -214,13 +214,12 @@ class EnergyProvider {
     double oilPrice;
     double solarPrice;
     double nuclearPrice;
-    EnergyProvider(string filename, string E_id, string E_name, initializer_list<pair<string, string>> list){
+    EnergyProvider(string filename, string E_id, string E_name, std::unordered_map<int, std::string> &REGIONS){
         this->E_id = E_id;
         this->E_name = E_name;
         provinces.reserve(num_provinces);
-        for(auto const &pair : list){
-            Province province(pair.first, pair.second);
-            provinces.push_back(province);
+        for(auto &x : REGIONS){
+            cout << x.first << " " << x.second << endl;
         }
         /* 
            you can add database connection functionality
