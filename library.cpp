@@ -104,11 +104,11 @@ string addressPrompt(){
 }
 
 bool fileName(const string& input){
-	return regex_match(input, regex{"\\w+\\.(txt|csv)"});
+	return regex_match(input, regex{"\\w+\\.input"});
 }
 
 string filenamePrompt(){
-	return string("Enter name of file in current working directory with csv/txt extension : ");
+	return string("Enter name of file in current working directory with .input extension : ");
 }
 
 void getField(string &input, bool (*re_ptr)(const string&), string prompt) {

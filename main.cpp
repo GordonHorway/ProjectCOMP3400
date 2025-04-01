@@ -96,10 +96,6 @@ int main(int argc, char **argv){
     bool isProvince;
     double amtPaid;
 
-    EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
-
-    cout << "Ontario Province ID : 1000\nQuebec Province ID : 1001\nAlberta Province ID : 1002\nManitoba Province ID : 1003\nSaskatchewan Province ID : 1004\n";
-
     std::ifstream file("info.csv");
     if (!file.is_open()) {
         std::cerr << "Error: Could not open info.csv" << std::endl;
@@ -161,6 +157,8 @@ int main(int argc, char **argv){
 
     file.close();
 
+    EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", REGIONS);
+
     // loop for menu in terminal
     int choice;
     while(true){
@@ -171,9 +169,7 @@ int main(int argc, char **argv){
         switch(choice){
             case 0:
                 energyProvider.readFile();
-
             break;
-
             case 11:    // Add New Customer
                 getField(C_id, customerID, customerIDPrompt());
                 getField(C_Pr_id, provinceID, provinceIDPrompt());
