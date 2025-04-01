@@ -183,7 +183,6 @@ int main(int argc, char **argv){
                     cout << "Customer ID already exists" << endl;
                 }
             break;
-
             case 12:    // Remove Customer
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.removeCustomer(C_id);
@@ -191,7 +190,6 @@ int main(int argc, char **argv){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
-
             case 13:    // View Customer
                 getField(C_id, customerID, customerIDPrompt());
                 isCustomer = energyProvider.viewCustomer(C_id);
@@ -199,7 +197,6 @@ int main(int argc, char **argv){
                     cout << "Could not find customer associated with this Customer ID" << endl;
                 }
             break;
-
             case 14:    // Edit Customer
                 getField(C_id, customerID, customerIDPrompt());
                 if(!(isCustomer = energyProvider.editCustomerInfo(C_id))){
