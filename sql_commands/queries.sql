@@ -1,3 +1,4 @@
+/*
 1. Manage Customer
     1.1 Add New Customer // done
     1.2 Remove Customer // done
@@ -25,3 +26,12 @@
     4.5 View Customers with Unpaid Bills // can be done entirely in SQL
     4.6 View Customers with Overdue Bills // can be done entirely in SQL
 
+*/
+
+# // 1.1 Add New Customer
+
+-- Add a new customer
+INSERT INTO CUSTOMERS (C_name, C_phone, C_R_id)
+VALUES ('John Doe', '1234567890', 1);
+-- Retrieve the auto-generated ID
+SELECT LAST_INSERT_ID() AS New_Customer_ID;

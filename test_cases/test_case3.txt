@@ -1,0 +1,11 @@
+0
+customers.csv
+11
+2045
+1000
+Aleks Stajdohar
+111-222-3333
+640 Kennedy Drive
+13
+2045
+5
