@@ -8,12 +8,12 @@
 
 sqlite3 *setupDB();
 
-int callback(void* NotUsed, int argc, char** argv, char** azColName) {
+int callbackPrint(void* NotUsed, int argc, char** argv, char** azColName) {
     for (int i = 0; i < argc; i++) {
         std::cout << azColName[i] << ": " << (argv[i] ? argv[i] : "NULL") << std::endl;
     }
     std::cout << std::endl;
-    (void) NotUsed;
+    (void) NotUsed; // This is here just to suppress a warning from the compiler
     return 0;
 }
 
@@ -27,9 +27,24 @@ int main(int argc, char **argv){
     cout << "Our database is ready to use!\n";
 
     const char* sql = "SELECT * FROM REGIONS;";
+    const char *overdueQuery = "SELECT "
+    "B_id, "
+    "B_C_id, "
+    "B_due, "
+    "B_amt_paid, "
+    "B_oil_ct, "
+    "B_sol_ct, "
+    "B_nuc_ct, "
+    "B_oil_pr, "
+    "B_sol_pr, "
+    "B_nuc_pr "
+"FROM BILLS "
+"WHERE B_overdue = TRUE;";
     char* errMsg = 0;
 
-    sqlite3_exec(db, sql, callback, 0, &errMsg);
+    sqlite3_exec(db, sql, callbackPrint, 0, &errMsg);
+
+    cout << "(A test of a sql query to print out the contents of the region table)" << endl;
 
     try{
     if(argc != 2){
@@ -51,9 +66,8 @@ int main(int argc, char **argv){
     bool isProvince;
     double amtPaid;
 
-    EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
-
-    cout << "Ontario Province ID : 1001 | Quebec Province ID : 1002 | Alberta Province ID : 1003 | Manitoba Province ID : 1004 | Saskatchewan Province ID : 1005\n";
+    // I'll try to have it so that the Region ID and Names are not hard coded
+    EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1001", "Ontario"}, {"1002", "Quebec"}, {"1003", "Alberta"}, {"1004", "Manitoba"}, {"1005", "Saskatchewan"}});
 
     // loop for menu in terminal
     int choice;
@@ -178,7 +192,8 @@ int main(int argc, char **argv){
             break;
 
             case 44:    // Check Overdue Bills
-                cout << "To be done in SQL" << endl;
+            sqlite3_exec(db, overdueQuery, callbackPrint, 0, &errMsg);
+            // cout << "To be done in SQL" << endl;
             break;
 
             case 45:    // View Customers with Unpaid Bills
@@ -186,7 +201,7 @@ int main(int argc, char **argv){
             break;
             
             case 46:    // View Customers with Overdue Bills
-                cout << "To be done in SQL" << endl;
+                
             break;
             
             case 5:    // Exit
