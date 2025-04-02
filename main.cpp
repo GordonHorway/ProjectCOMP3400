@@ -6,7 +6,16 @@
 #include <list>
 #include <sqlite3.h>
 
+sqlite3 *setupDB();
+
 int main(int argc, char **argv){
+
+    sqlite3 *db = setupDB();
+    if(!db){
+        return 1;
+    }
+
+    cout << "Our database is ready to use!\n";
 
     try{
     if(argc != 2){
@@ -180,4 +189,14 @@ int main(int argc, char **argv){
     }
 
     return 0;
+}
+
+sqlite3 *setupDB(){
+    sqlite3 *db;
+    int rc = sqlite3_open("test.db", &db);
+    if(rc != SQLITE_OK){
+        fprintf(stderr, "cannot open database %s\n", sqlite3_errmsg(db));
+        return NULL;
+    }
+    return db;
 }

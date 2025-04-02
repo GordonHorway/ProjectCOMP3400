@@ -1,5 +1,0 @@
-0
-customers.csv
-13
-2044
-5
