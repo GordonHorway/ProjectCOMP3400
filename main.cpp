@@ -211,7 +211,7 @@ int main(int argc, char **argv){
 
 sqlite3 *setupDB(){
     sqlite3 *db;
-    int rc = sqlite3_open("test.db", &db);
+    int rc = sqlite3_open("comp3400database.db", &db);
     if(rc != SQLITE_OK){
         fprintf(stderr, "cannot open database %s\n", sqlite3_errmsg(db));
         return NULL;
