@@ -5,6 +5,7 @@
 #include "library.hpp"
 #include <list>
 #include <sqlite3.h>
+#include "sql_queries.h"
 
 sqlite3 *setupDB();
 
@@ -27,31 +28,6 @@ int main(int argc, char **argv){
 
     cout << "Our database is ready to use!" << endl;
 
-    const char* sql = "SELECT * FROM REGIONS;";
-    const char *overdueQuery = "SELECT "
-    "B_id, "
-    "B_C_id, "
-    "B_due, "
-    "B_amt_paid, "
-    "B_oil_ct, "
-    "B_sol_ct, "
-    "B_nuc_ct, "
-    "B_oil_pr, "
-    "B_sol_pr, "
-    "B_nuc_pr "
-    "FROM BILLS "
-    "WHERE B_overdue = TRUE;";
-    const char *unpaidBillQuery = "SELECT " 
-    "CUSTOMERS.C_id AS Customer_ID, "
-    "CUSTOMERS.C_name AS Customer_Name, "
-    "CUSTOMERS.C_phone AS Customer_Phone, "
-    "CUSTOMERS.C_R_id AS Region_ID, "
-    "COUNT(BILLS.B_id) AS Unpaid_Bill_Count, "
-    "GROUP_CONCAT(BILLS.B_id) AS Unpaid_Bill_List "
-    "FROM CUSTOMERS "
-    "JOIN BILLS ON CUSTOMERS.C_id = BILLS.B_C_id "
-    "WHERE BILLS.B_pd = FALSE "
-    "GROUP BY CUSTOMERS.C_id, CUSTOMERS.C_name, CUSTOMERS.C_phone, CUSTOMERS.C_R_id;";
     char* errMsg = 0;
 
     sqlite3_exec(db, sql, callbackPrint, 0, &errMsg);
@@ -200,7 +176,7 @@ int main(int argc, char **argv){
             break;
 
             case 43:    // Check Unpaid Bills
-                cout << "To be done in SQL" << endl;
+                sqlite3_exec(db, unpaidBillCheck, callbackPrint, 0, &errMsg);
             break;
 
             case 44:    // Check Overdue Bills
@@ -208,12 +184,11 @@ int main(int argc, char **argv){
             break;
 
             case 45:    // View Customers with Unpaid Bills
-                sqlite3_exec(db, unpaidBillQuery, callbackPrint, 0, &errMsg);
-                cout << "To be done in SQL" << endl;
+                sqlite3_exec(db, unpaidBillView, callbackPrint, 0, &errMsg);
             break;
             
             case 46:    // View Customers with Overdue Bills
-                
+                cout << "To be done in SQL" << endl;
             break;
             
             case 5:    // Exit
