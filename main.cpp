@@ -4,6 +4,7 @@
 #include "classes.hpp"
 #include "library.hpp"
 #include <list>
+#include <sqlite3.h>
 
 int main(int argc, char **argv){
 

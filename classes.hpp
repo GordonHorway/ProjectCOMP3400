@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include "library.hpp"
+#include <sqlite3.h>
 
 using namespace std;
 
