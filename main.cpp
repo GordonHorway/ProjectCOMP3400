@@ -8,6 +8,15 @@
 
 sqlite3 *setupDB();
 
+int callback(void* NotUsed, int argc, char** argv, char** azColName) {
+    for (int i = 0; i < argc; i++) {
+        std::cout << azColName[i] << ": " << (argv[i] ? argv[i] : "NULL") << std::endl;
+    }
+    std::cout << std::endl;
+    (void) NotUsed;
+    return 0;
+}
+
 int main(int argc, char **argv){
 
     sqlite3 *db = setupDB();
@@ -16,6 +25,11 @@ int main(int argc, char **argv){
     }
 
     cout << "Our database is ready to use!\n";
+
+    const char* sql = "SELECT * FROM REGIONS;";
+    char* errMsg = 0;
+
+    sqlite3_exec(db, sql, callback, 0, &errMsg);
 
     try{
     if(argc != 2){
@@ -39,7 +53,7 @@ int main(int argc, char **argv){
 
     EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1000", "Ontario"}, {"1001", "Quebec"}, {"1002", "Alberta"}, {"1003", "Manitoba"}, {"1004", "Saskatchewan"}});
 
-    cout << "Ontario Province ID : 1000\nQuebec Province ID : 1001\nAlberta Province ID : 1002\nManitoba Province ID : 1003\nSaskatchewan Province ID : 1004\n";
+    cout << "Ontario Province ID : 1001 | Quebec Province ID : 1002 | Alberta Province ID : 1003 | Manitoba Province ID : 1004 | Saskatchewan Province ID : 1005\n";
 
     // loop for menu in terminal
     int choice;
@@ -187,6 +201,8 @@ int main(int argc, char **argv){
     }catch(invalid_argument &e){
         cerr << e.what();
     }
+
+    sqlite3_close(db);
 
     return 0;
 }
