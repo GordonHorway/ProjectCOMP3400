@@ -11,6 +11,9 @@
 #include <sqlite3.h>
 #include "sql_queries.h"
 
+// ?? 
+extern sqlite3 *db;
+
 using namespace std;
 
 constexpr int num_provinces = 5;
@@ -50,7 +53,7 @@ class Bill {
         double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_paid{B_paid},B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
     void billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
-        cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_paid: " << (B_paid ? "Paid" : "Unpaid") << endl << "B_balance : " << B_balance << endl;
+        cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_paid: " << (B_paid ? "Paid" : "Unpaid") << endl << "B_balance : " << (B_balance = B_oilCost * B_oilCount + B_solarCost * B_solarCount + B_nuclearCost * B_nuclearCount) << endl;
         cout << "B_amtPaid : " << B_amtPaid << endl << "B_oilCount : " << B_oilCount << endl << "B_solarCount : " << B_solarCount << endl;
         cout << "B_nuclearCount : " << B_nuclearCount << endl << "B_oilCost : " << B_oilCost << endl << "B_solarCost : " << B_solarCost << endl << "B_nuclearCost : " << B_nuclearCost << endl;
     }
@@ -285,8 +288,38 @@ class EnergyProvider {
                 return &(province.customers[C_id]);
             }
         }
-        // add to SQL database here
         return nullptr;
+    }
+    void addCustomerToDatabase(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+        std::string sql = "INSERT INTO Customers VALUES ('" + 
+        C_id + "', '" + 
+        C_name + "', '" + 
+        C_address + "', '" + 
+        C_phone + "', '" + 
+        C_R_id + "');";
+        char *errMsg = nullptr;
+
+        // Execute the SQL statement
+        int rc = sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
+        if (rc != SQLITE_OK) {
+            std::cerr << "SQL error: " << errMsg << std::endl;
+            sqlite3_free(errMsg);
+        } else {
+            std::cout << "Record inserted successfully!" << std::endl;
+        }
+    }
+    void removeCustomerFromDatabase(string CustomerID){
+        std::string sql = "DELETE FROM Customers WHERE C_id = '" + CustomerID + "';";
+        char *errMsg = nullptr;
+
+        // Execute the SQL statement
+        int rc = sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
+        if (rc != SQLITE_OK) {
+            std::cerr << "SQL error: " << errMsg << std::endl;
+            sqlite3_free(errMsg);
+        } else {
+            std::cout << "Record deleted successfully!" << std::endl;
+        }
     }
     bool removeCustomer(string C_id){
         for(auto &province : provinces){

@@ -7,13 +7,15 @@
 #include <sqlite3.h>
 #include "sql_queries.h"
 
+sqlite3 *db;
+
 sqlite3 *setupDB();
 int callbackPrint(void* NotUsed, int argc, char** argv, char** azColName);
 vector<pair<string, string>> readRegionsDatabase(sqlite3 *db);
 
 int main(int argc, char **argv){
 
-    sqlite3 *db = setupDB();
+    db = setupDB();
     if(!db){
         cerr << "There was an issue setting up the database!" << endl;
         return 1;
@@ -63,7 +65,10 @@ int main(int argc, char **argv){
                         getField(C_name, name, namePrompt());
                         getField(C_phone, phoneNumber, phoneNumberPrompt());
                         getField(C_address, address, addressPrompt());
-                        energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_Pr_id);
+                        Customer *customerPtr = energyProvider.addNewCustomer(C_id, C_name, C_address, C_phone, C_Pr_id);
+                        if(customerPtr != nullptr){
+                            energyProvider.addCustomerToDatabase(C_id, C_name, C_address, C_phone, C_Pr_id);
+                        }
                     } else {
                         cout << "Customer ID already exists" << endl;
                     }
@@ -74,6 +79,8 @@ int main(int argc, char **argv){
                     isCustomer = energyProvider.removeCustomer(C_id);
                     if(!isCustomer){
                         cout << "Could not find customer associated with this Customer ID" << endl;
+                    } else {
+                        energyProvider.removeCustomerFromDatabase(C_id);
                     }
                 break;
 
