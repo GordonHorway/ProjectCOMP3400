@@ -9,6 +9,7 @@
 #include <sstream>
 #include "library.hpp"
 #include <sqlite3.h>
+#include "sql_queries.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class Bill {
     string B_issueDate;
     string B_dueDate;      // (Calculated field -> Issue Date)
     bool B_overdue;
+    bool B_paid;
     double B_balance;       // (Calculated field -> Counts x Costs)
     double B_amtPaid;
     double B_oilCount;
@@ -37,6 +39,7 @@ class Bill {
         string B_issueDate,
         string B_dueDate,   
         bool B_overdue,
+        bool B_paid,
         double B_balance,       
         double B_amtPaid,
         double B_oilCount,
@@ -44,7 +47,7 @@ class Bill {
         double B_nuclearCount,
         double B_oilCost,    
         double B_solarCost,
-        double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
+        double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_paid{B_paid},B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
     void billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
         cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_balance : " << B_balance << endl;
@@ -215,18 +218,15 @@ class EnergyProvider {
     double oilPrice;
     double solarPrice;
     double nuclearPrice;
-    EnergyProvider(string filename, string E_id, string E_name, initializer_list<pair<string, string>> list){
+    EnergyProvider(string filename, string E_id, string E_name, vector<pair<string, string>> v){
         this->E_id = E_id;
         this->E_name = E_name;
         provinces.reserve(num_provinces);
-        for(auto const &pair : list){
+        for(auto const &pair : v){
             Province province(pair.first, pair.second);
+            cout << pair.first << " " << pair.second << endl;
             provinces.push_back(province);
         }
-        /* 
-           you can add database connection functionality
-           Write infomation to database as well
-        */
         ifstream inFile(filename);
         string energyType;
         string cost;
@@ -239,8 +239,8 @@ class EnergyProvider {
         inFile.close();
     }
     void displayAllPrices(){
-        cout << "Oil Price :$" << oilPrice << endl;
-        cout << "Solar Price :$" << solarPrice << endl;
+        cout << "Oil Price :$" << oilPrice << " *** ";
+        cout << "Solar Price :$" << solarPrice << " *** ";
         cout << "Nuclear Price :$" << nuclearPrice << endl;
     }
     bool viewCustomer(string C_id){
@@ -278,14 +278,15 @@ class EnergyProvider {
         }
         return false;
     }
-    void addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
+    Customer* addNewCustomer(string C_id, string C_name, string C_address, string C_phone, string C_R_id){
         for(auto &province : provinces){
             if(province.P_id == C_R_id){
                 province.customers.insert({C_id, Customer(C_id, C_name, C_address, C_phone, C_R_id)});
-                break;
+                return &(province.customers[C_id]);
             }
         }
         // add to SQL database here
+        return nullptr;
     }
     bool removeCustomer(string C_id){
         for(auto &province : provinces){
@@ -330,7 +331,7 @@ class EnergyProvider {
         outFile.close();
     }
     void readCustomerDatabase(sqlite3 *db) {
-        const char *sql = "SELECT C_id, C_name, C_address, C_phone, C_R_id FROM CUSTOMERS;";
+      
         sqlite3_stmt *stmt;
     
         if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
@@ -344,7 +345,19 @@ class EnergyProvider {
             const char *C_address = (const char *)sqlite3_column_text(stmt, 2);
             const char *C_phone = (const char *)sqlite3_column_text(stmt, 3);
             const char *C_R_id = (const char *)sqlite3_column_text(stmt, 4);
-            addNewCustomer(C_id, C_name, C_address, C_phone, C_R_id);
+            Customer *customerPtr = addNewCustomer(C_id, C_name, C_address, C_phone, C_R_id);
+            customerPtr->bill.B_id = (const char *)sqlite3_column_text(stmt, 5);
+            customerPtr->bill.B_C_id = (const char *)sqlite3_column_text(stmt, 6);
+            customerPtr->bill.B_dueDate = (const char *)sqlite3_column_text(stmt, 7);
+            customerPtr->bill.B_amtPaid = sqlite3_column_double(stmt, 8);
+            customerPtr->bill.B_paid = sqlite3_column_int(stmt, 9);
+            customerPtr->bill.B_overdue = sqlite3_column_int(stmt, 10);
+            customerPtr->bill.B_oilCount = sqlite3_column_double(stmt, 11);
+            customerPtr->bill.B_solarCount = sqlite3_column_double(stmt, 12);
+            customerPtr->bill.B_nuclearCount = sqlite3_column_double(stmt, 13);
+            customerPtr->bill.B_oilCost = sqlite3_column_double(stmt, 14);
+            customerPtr->bill.B_solarCost = sqlite3_column_double(stmt, 15);
+            customerPtr->bill.B_nuclearCost = sqlite3_column_double(stmt, 16);
         }
     
         sqlite3_finalize(stmt);

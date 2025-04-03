@@ -8,15 +8,8 @@
 #include "sql_queries.h"
 
 sqlite3 *setupDB();
-
-int callbackPrint(void* NotUsed, int argc, char** argv, char** azColName) {
-    for (int i = 0; i < argc; i++) {
-        std::cout << azColName[i] << ": " << (argv[i] ? argv[i] : "NULL") << std::endl;
-    }
-    std::cout << std::endl;
-    (void) NotUsed; // This is here just to suppress a warning from the compiler
-    return 0;
-}
+int callbackPrint(void* NotUsed, int argc, char** argv, char** azColName);
+vector<pair<string, string>> readRegionsDatabase(sqlite3 *db);
 
 int main(int argc, char **argv){
 
@@ -29,8 +22,6 @@ int main(int argc, char **argv){
     cout << "Our database is ready to use!" << endl;
 
     char* errMsg = 0;
-
-    sqlite3_exec(db, sql, callbackPrint, 0, &errMsg);
 
     try{
         if(argc != 2){
@@ -52,8 +43,7 @@ int main(int argc, char **argv){
         bool isProvince;
         double amtPaid;
 
-        // I'll try to have it so that the Region ID and Names are not hard coded
-        EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1001", "Ontario"}, {"1002", "Quebec"}, {"1003", "Alberta"}, {"1004", "Manitoba"}, {"1005", "Saskatchewan"}});
+        EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", readRegionsDatabase(db));
 
         energyProvider.readCustomerDatabase(db);
 
@@ -213,4 +203,37 @@ sqlite3 *setupDB(){
         return NULL;
     }
     return db;
+}
+
+int callbackPrint(void* NotUsed, int argc, char** argv, char** azColName) {
+    for (int i = 0; i < argc; i++) {
+        std::cout << azColName[i] << ": " << (argv[i] ? argv[i] : "NULL") << std::endl;
+    }
+    std::cout << std::endl;
+    (void) NotUsed; // This is here just to suppress a warning from the compiler
+    return 0;
+}
+
+vector<pair<string, string>> readRegionsDatabase(sqlite3 *db) {
+      
+    sqlite3_stmt *stmt;
+
+    if (sqlite3_prepare_v2(db, regionSelect, -1, &stmt, NULL) != SQLITE_OK) {
+        printf("Failed to prepare query: %s\n", sqlite3_errmsg(db));
+        return vector<pair<string, string>>{};
+        // lol
+    }
+
+    vector<pair<string, string>> v;
+    
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        pair<string, string> temp;
+        temp.first = (const char *)sqlite3_column_text(stmt, 0);
+        temp.second = (const char *)sqlite3_column_text(stmt, 1);
+        v.push_back(temp);
+    }
+
+    sqlite3_finalize(stmt);
+
+    return v;
 }

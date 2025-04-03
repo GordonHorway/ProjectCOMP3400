@@ -1,7 +1,7 @@
 #ifndef SQL_QUERIES
 #define SQL_QUERIES
 
-    const char* sql = "SELECT * FROM REGIONS;";
+    const char* regionSelect = "SELECT * FROM REGIONS;";
     const char *overdueQuery = "SELECT "
     "B_id, "
     "B_C_id, "
@@ -36,5 +36,25 @@
     "B_overdue "
     "FROM BILLS "
     "WHERE B_pd = FALSE;";
+    const char *sql = "SELECT "
+    "CUSTOMERS.C_id," 
+    "CUSTOMERS.C_name, "
+    "CUSTOMERS.C_address, "
+    "CUSTOMERS.C_phone, "
+    "CUSTOMERS.C_R_id, "
+    "BILLS.B_id, "
+    "BILLS.B_C_id, "
+    "BILLS.B_due, "
+    "BILLS.B_amt_paid, "
+    "BILLS.B_pd, "
+    "BILLS.B_overdue, "
+    "BILLS.B_oil_ct, "
+    "BILLS.B_sol_ct, "
+    "BILLS.B_nuc_ct, "
+    "BILLS.B_oil_pr, "
+    "BILLS.B_sol_pr, "
+    "BILLS.B_nuc_pr " 
+    "FROM CUSTOMERS "
+    "INNER JOIN BILLS ON CUSTOMERS.C_id = BILLS.B_C_id;";
 
-#endif
+    #endif
