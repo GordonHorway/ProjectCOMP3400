@@ -13,7 +13,6 @@ void clear(){
 }
 
 void menu(){
-	cout << "0.) Read Input File" << endl;
 	cout << "1.) Manage Customer" << endl;
 	cout << "	11.) Add New Customer" << endl;
 	cout << "	12.) Remove Customer" << endl;
