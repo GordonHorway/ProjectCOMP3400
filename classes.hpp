@@ -21,7 +21,7 @@ class Bill {
     public:
     string B_id;            // (Primary Key)
     string B_C_id;          // (Foreign Key) (CUSTOMER)
-    string B_issueDate;
+    string B_issueDate = "N/A";
     string B_dueDate;      // (Calculated field -> Issue Date)
     bool B_overdue;
     bool B_paid;
@@ -50,7 +50,7 @@ class Bill {
         double B_nuclearCost):B_id{B_id}, B_C_id{B_C_id}, B_issueDate{B_issueDate}, B_dueDate{B_dueDate}, B_overdue{B_overdue}, B_paid{B_paid},B_balance{B_balance}, B_amtPaid{B_amtPaid}, B_oilCount{B_oilCount}, B_solarCount{B_solarCount}, B_nuclearCount{B_nuclearCount}, B_oilCost{B_oilCost}, B_solarCost{B_solarCost}, B_nuclearCost{B_nuclearCost} {}
     void billPrinter(){
         cout << "B_id : " << B_id << endl << "B_C_id : " << B_C_id << endl << "B_issueDate : " << B_issueDate << endl;
-        cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_balance : " << B_balance << endl;
+        cout << "B_dueDate : " << B_dueDate << endl << "B_overdue : " << (B_overdue ? "Overdue" : "Not Overdue") << endl << "B_paid: " << (B_paid ? "Paid" : "Unpaid") << endl << "B_balance : " << B_balance << endl;
         cout << "B_amtPaid : " << B_amtPaid << endl << "B_oilCount : " << B_oilCount << endl << "B_solarCount : " << B_solarCount << endl;
         cout << "B_nuclearCount : " << B_nuclearCount << endl << "B_oilCost : " << B_oilCost << endl << "B_solarCost : " << B_solarCost << endl << "B_nuclearCost : " << B_nuclearCost << endl;
     }
@@ -430,7 +430,11 @@ class EnergyProvider {
     void payBill(string customerID, double amt){
         for(auto &province : provinces){
             if(province.customers.find(customerID) != province.customers.end()){
-             province.customers[customerID].bill.B_balance -= amt;
+             if((province.customers[customerID].bill.B_balance -= amt) <= 0){
+                province.customers[customerID].bill.B_paid = true;
+                province.customers[customerID].bill.B_overdue = false;
+             }
+             // update in SQL??
              break;
             }
          }

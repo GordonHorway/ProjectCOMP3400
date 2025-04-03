@@ -497,18 +497,7 @@ INSERT INTO CUSTOMERS (C_id, C_name, C_address, C_phone, C_R_id) VALUES
 (2487, 'Harold Taterwobble','383 Aspen Ave', '1234562487', 1005),
 (2488, 'Sandy Wobblefuzz','894 Alder St', '1234562488', 1005),
 (2489, 'Benny Jigglenoodle','324 Maple Blvd', '1234562489', 1005),
-(2490, 'Daisy Fluffykins','184 Aspen Ave', '1234562490', 1005),
-(2491, 'Clarence Jollybutter','581 Birch St', '1234562491', 1005),
-(2492, 'Toby Dimplebeans','865 Holly Rd', '1234562492', 1005),
-(2493, 'Gracie Snickerfizz','151 Dogwood Ave', '1234562493', 1005),
-(2494, 'Oscar Noodlebeard','615 Redwood Ave', '1234562494', 1005),
-(2495, 'Rusty Whifflebop','655 Fir Rd', '1234562495', 1005),
-(2496, 'Maggie Wobblepuff','695 Juniper Ave', '1234562496', 1005),
-(2497, 'Theo Bumperbeans','144 Hickory Ave', '1234562497', 1005),
-(2498, 'Dolly Fizzlepants','202 Spruce Ave', '1234562498', 1005),
-(2499, 'Billy Wobblewhisk','836 Holly Blvd', '1234562499', 1005),
-(2500, 'Zoe Taterboop','168 Laurel Ave', '1234562500', 1005);
-
+(2490, 'Daisy Fluffykins','184 Aspen Ave', '1234562490', 1005);
 
 -- Populate BILLS table
 INSERT INTO BILLS (B_id, B_C_id, B_due, B_amt_paid, B_pd, B_overdue, B_oil_ct, B_sol_ct, B_nuc_ct, B_oil_pr, B_sol_pr, B_nuc_pr) VALUES
@@ -1001,14 +990,4 @@ INSERT INTO BILLS (B_id, B_C_id, B_due, B_amt_paid, B_pd, B_overdue, B_oil_ct, B
 (3487,2487,'02-09-2025',114,FALSE,TRUE,69,52,54,1.2,1.2,2),
 (3488,2488,'12-13-2024',118,FALSE,TRUE,52,45,26,1.8,1.8,1.7),
 (3489,2489,'11-24-2024',142,FALSE,TRUE,89,25,48,2,1.6,0.6),
-(3490,2490,'12-23-2024',107,FALSE,TRUE,5,90,1,1.9,1.4,0.8),
-(3491,2491,'12-04-2024',110,TRUE,FALSE,6,25,80,2.1,1.3,0.7),
-(3492,2492,'02-04-2025',145,FALSE,TRUE,35,27,42,1.7,1.5,2.1),
-(3493,2493,'01-07-2025',119,FALSE,TRUE,88,40,22,1.5,1.9,1.4),
-(3494,2494,'11-10-2024',108,FALSE,TRUE,81,11,59,1.5,1,1.6),
-(3495,2495,'02-21-2025',119,TRUE,FALSE,25,6,51,1.6,1.5,1.2),
-(3496,2496,'10-31-2024',132,FALSE,TRUE,46,15,55,1.5,1.5,2.1),
-(3497,2497,'11-14-2024',108,FALSE,TRUE,36,76,25,1.3,1.3,2),
-(3498,2498,'02-13-2025',142,FALSE,TRUE,61,61,51,2,0.8,1.5),
-(3499,2499,'02-24-2025',106,FALSE,TRUE,78,63,81,1.9,1.4,0.5),
-(3500,2500,'01-07-2025',144,TRUE,FALSE,20,99,3,1.6,1.1,0.5);
+(3490,2490,'12-23-2024',107,FALSE,TRUE,5,90,1,1.9,1.4,0.8);
