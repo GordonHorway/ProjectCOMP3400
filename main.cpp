@@ -32,7 +32,7 @@ int main(int argc, char **argv){
 
     sqlite3_exec(db, sql, callbackPrint, 0, &errMsg);
 
-    cout << "(A test of a sql query to print out the contents of the region table)" << endl;
+    // cout << "(A test of a sql query to print out the contents of the region table)" << endl;
 
     try{
     if(argc != 2){
@@ -57,6 +57,8 @@ int main(int argc, char **argv){
     // I'll try to have it so that the Region ID and Names are not hard coded
     EnergyProvider energyProvider(argv[1], "0111", "LargeCorporation", {{"1001", "Ontario"}, {"1002", "Quebec"}, {"1003", "Alberta"}, {"1004", "Manitoba"}, {"1005", "Saskatchewan"}});
 
+    energyProvider.readCustomerDatabase(db);
+
     // loop for menu in terminal
     int choice;
     while(true){
@@ -66,7 +68,8 @@ int main(int argc, char **argv){
         clear();
         switch(choice){
             case 0:
-                energyProvider.readFile();
+                cout << "Disabled for now!" << endl;
+                // energyProvider.readFile();
             break;
 
             case 11:    // Add New Customer
