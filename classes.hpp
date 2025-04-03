@@ -330,8 +330,7 @@ class EnergyProvider {
         outFile.close();
     }
     void readCustomerDatabase(sqlite3 *db) {
-        // change this part
-        const char *sql = "SELECT C_id, C_name, C_phone, C_R_id FROM CUSTOMERS;";
+        const char *sql = "SELECT C_id, C_name, C_address, C_phone, C_R_id FROM CUSTOMERS;";
         sqlite3_stmt *stmt;
     
         if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
@@ -342,9 +341,10 @@ class EnergyProvider {
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             const char *C_id  = (const char *)sqlite3_column_text(stmt, 0);
             const char *C_name = (const char *)sqlite3_column_text(stmt, 1);
-            const char *C_phone = (const char *)sqlite3_column_text(stmt, 2);
-            const char *C_R_id = (const char *)sqlite3_column_text(stmt, 3);
-            addNewCustomer(C_id, C_name, "dummy address", C_phone, C_R_id);
+            const char *C_address = (const char *)sqlite3_column_text(stmt, 2);
+            const char *C_phone = (const char *)sqlite3_column_text(stmt, 3);
+            const char *C_R_id = (const char *)sqlite3_column_text(stmt, 4);
+            addNewCustomer(C_id, C_name, C_address, C_phone, C_R_id);
         }
     
         sqlite3_finalize(stmt);
