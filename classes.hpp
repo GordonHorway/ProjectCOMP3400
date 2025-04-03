@@ -11,7 +11,7 @@
 #include <sqlite3.h>
 #include "sql_queries.h"
 
-// ?? 
+
 extern sqlite3 *db;
 
 using namespace std;

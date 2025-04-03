@@ -5,3 +5,5 @@ with passing energy_prices.txt onto the command line.
 4. The menu will continue to loop until you exit.
 5. There is a customers.output file that is produced by our program containing all the customer entries
 that were loaded into our program from the database at runtime. It would also reflect additions/deletions of customers that happened during runtime.
+6. Currently our bill system only accepts one bill per customer. So if you make an order it will overwrite the
+current customers bill from the database.
