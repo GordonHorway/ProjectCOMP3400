@@ -1,0 +1,3 @@
+Gordon - library.cpp, library.hpp, main.cpp, run.sh, implementing the sql connector/api code
+
+Niko - // Put whatever here
