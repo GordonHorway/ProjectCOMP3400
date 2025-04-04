@@ -1,4 +1,4 @@
-CC=gcc
+CC=g++
 CPPFLAGS=-std=c++20 -Wall -Wextra -Werror -pedantic -O3 -march=native -lsqlite3
 
 all: main
