@@ -1,3 +1,5 @@
-Gordon - library.cpp, library.hpp, main.cpp, run.sh, implementing the sql connector/api code
+Gordon - library.cpp, library.hpp, main.cpp, run.sh, implementing the sql connector/api code, general design of classes
+used in classes.hpp.
 
-Niko - // Put whatever here
+Niko - creation of sql commands, sql_queries.h, general design of classes used in classes.hpp and their structure
+to have a correspondence with a database.
