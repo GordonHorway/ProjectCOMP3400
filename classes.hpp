@@ -328,7 +328,6 @@ class EnergyProvider {
                 return true;
             }
         }
-        // remove from SQL database here
         return false;
     }
     void editOilPrice(double newOilPrice){
@@ -449,7 +448,6 @@ class EnergyProvider {
                 return true;
             }
         }
-        // Update in SQL database
         return false;
     }
     void printBill(string customerID){
@@ -467,7 +465,6 @@ class EnergyProvider {
                 province.customers[customerID].bill.B_paid = true;
                 province.customers[customerID].bill.B_overdue = false;
              }
-             // update in SQL??
              break;
             }
          }

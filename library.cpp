@@ -38,10 +38,13 @@ void menu(){
 	cout << "5.) Exit" << endl;
 }
 
+// below are functions that contain regular expressions which we used for validating input
+
 bool energyProviderID(const string &input) {
 	return regex_match(input, regex{ "0[0-9]{3}" });
 }
 
+// provinceID ranges from 1001 to 1005 (inclusive)
 bool provinceID(const string& input) {
 	return regex_match(input, regex{ "100[1-5]" });
 }
@@ -50,6 +53,7 @@ string provinceIDPrompt(){
 	return string("Enter Province ID (i.e 1DDD (D is a digit)) : ");
 }
 
+// customerID ranges from 2000 to 2999 (inclusive)
 bool customerID(const string& input) {
 	return regex_match(input, regex{ "2[0-9]{3}" });
 }
@@ -58,6 +62,7 @@ string customerIDPrompt(){
 	return string("Enter Customer ID (i.e 2DDD (D is a digit)) : ");
 }
 
+// billingID ranges from 3000 to 3999
 bool billingID(const string& input) {
 	return regex_match(input, regex{ "3[0-9]{3}" });
 }
@@ -66,6 +71,7 @@ string billingIDPrompt(){
 	return string("Enter Billing ID (i.e 3DDD (D is a digit)) : ");
 }
 
+// orderID ranges from 4000 to 4999
 bool orderID(const string& input){
 	return regex_match(input, regex("4[0-9]{3}"));
 }
@@ -82,10 +88,12 @@ string phoneNumberPrompt(){
 	return string("Enter Phone Number (i.e DDD-DDD-DDDD (D is a digit)) : ");
 }
 
+// regex for a real number
 bool number(const string &input) {
 	return regex_match(input, regex{ "[+-]?(\\d+|(\\d*\\.\\d+))" });
 }
 
+// regex for a first and last name with any number of whitespace inbetween
 bool name(const string& input) {
 	return regex_match(input, regex{ "\\s*[a-zA-Z]+\\s+[a-zA-Z]+\\s*" });
 }
@@ -102,6 +110,8 @@ string addressPrompt(){
 	return string("Enter address (i.e DDDD or DDD (D is a digit) String String) : ");
 }
 
+// fileName and filenamePrompt are no longer being used
+
 bool fileName(const string& input){
 	return regex_match(input, regex{"\\w+\\.(txt|csv)"});
 }
@@ -110,6 +120,10 @@ string filenamePrompt(){
 	return string("Enter name of file in current working directory with csv/txt extension : ");
 }
 
+/* 
+	General purpose input function
+	The second parameter is a function pointer that allows for the use of the various regex patterns for different input validation
+*/
 void getField(string &input, bool (*re_ptr)(const string&), string prompt) {
 	do {
 		cout << prompt;
