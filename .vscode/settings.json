@@ -7,6 +7,5 @@
         "__hash_table": "cpp",
         "unordered_map": "cpp",
         "list": "cpp"
-    },
-    "makefile.configureOnOpen": true
+    }
 }
