@@ -3,6 +3,8 @@ CPPFLAGS=-std=c++20 -v -Wall -Wextra -Werror -pedantic -O3 -march=native
 DYFLAGS=-lsqlite3
 STFLAGS=./libsqlite3.a
 
+all: main_dynamic main_static
+
 dynamic: main_dynamic
 	./main_dynamic energy_prices.txt
 
