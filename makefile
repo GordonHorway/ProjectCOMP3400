@@ -3,10 +3,10 @@ CPPFLAGS=-std=c++20 -v -Wall -Wextra -Werror -pedantic -O3 -march=native
 DYFLAGS=-lsqlite3
 STFLAGS=./libsqlite3.a
 
-dynamic:
+dynamic: main_dynamic
 	./main_dynamic energy_prices.txt
 
-static:
+static: main_static
 	./main_static energy_prices.txt
 
 main_dynamic: main.o library.o
@@ -22,4 +22,4 @@ library.o: library.cpp library.hpp
 	$(CC) -c library.cpp
 
 clean:
-	rm *.o; rm -i main_*; echo "all clean!"
+	@rm *.o; ls -lh main_*; rm main_*; echo "all clean!"
