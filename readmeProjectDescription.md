@@ -1,4 +1,4 @@
-*** I know that this has been submitted 2 days late but I had to make amends and make sure to statically link the sqlite3 library to ensure it runs properly on your machine, even though it works fine on mine. Thank you. ***
+*** I know that this has been submitted 2 days late but I had to make amends and make sure to include the sqlite3 library locally and statically link it to ensure it runs properly on your machine, even though the previous dynamic version works fine on my machine. Thank you. ***
 1. ./run.sh shell script compiles and runs our program with all of the necessary compilation flags along
 with passing energy_prices.txt onto the command line.
 2. energy_prices.txt consists of prices for solar, oil and nuclear. This information is loaded into our program at runtime to be used for calculating the balance due by the customer when they make an order.
