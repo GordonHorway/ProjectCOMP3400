@@ -1,9 +1,10 @@
 CC=g++
-CPPFLAGS=-std=c++20 -v -Wall -Wextra -Werror -pedantic -O3 -march=native
+CPPFLAGS=-std=c++20 -g -Wall -Wextra -Werror -pedantic -O3 -march=native
 DYFLAGS=-lsqlite3
 STFLAGS=./libsqlite3.a
 
 all: main_dynamic main_static
+	./main_dynamic energy_prices.txt || ./main_static energy_prices.txt
 
 dynamic: main_dynamic
 	./main_dynamic energy_prices.txt
@@ -12,16 +13,16 @@ static: main_static
 	./main_static energy_prices.txt
 
 main_dynamic: main.o library.o
-	$(CC) $(CPPFLAGS) $(DYFLAGS) main.o library.o -o main_dynamic
+	$(CC) $(DYFLAGS) main.o library.o -o main_dynamic
 
 main_static: main.o library.o ./libsqlite3.a
-	$(CC) $(CPPFLAGS) main.o library.o $(STFLAGS) -o main_static
+	$(CC) main.o library.o $(STFLAGS) -o main_static
 
 main.o: main.cpp
-	$(CC) -c main.cpp
+	$(CC) $(CPPFLAGS) -c main.cpp
 
 library.o: library.cpp library.hpp
-	$(CC) -c library.cpp
+	$(CC) $(CPPFLAGS) -c library.cpp
 
 clean:
-	@rm *.o; ls -lh main_*; rm main_*; echo "all clean!"
+	@rm *.o; ls -lh main_* >> output.txt; rm main_*; echo "all clean!"

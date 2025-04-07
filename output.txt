@@ -1,0 +1,8 @@
+-rwxr-xr-x@ 1 gordonhorway  staff   193K Apr  7 13:59 main_dynamic
+-rwxr-xr-x@ 1 gordonhorway  staff   1.3M Apr  7 13:59 main_static
+-rwxr-xr-x@ 1 gordonhorway  staff   1.3M Apr  7 14:00 main_static
+-rwxr-xr-x@ 1 gordonhorway  staff   1.3M Apr  7 14:01 main_static
+-rwxr-xr-x@ 1 gordonhorway  staff   213K Apr  7 14:03 main_dynamic
+-rwxr-xr-x@ 1 gordonhorway  staff   1.3M Apr  7 14:03 main_static
+-rwxr-xr-x@ 1 gordonhorway  staff   213K Apr  7 14:03 main_dynamic
+-rwxr-xr-x@ 1 gordonhorway  staff   1.3M Apr  7 14:03 main_static
