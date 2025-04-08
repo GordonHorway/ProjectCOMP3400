@@ -4,13 +4,8 @@ DYFLAGS=-lsqlite3
 STFLAGS=./libsqlite3.a
 
 all: main_dynamic main_static
-	./main_dynamic energy_prices.txt || ./main_static energy_prices.txt
-
-dynamic: main_dynamic
-	./main_dynamic energy_prices.txt
-
-static: main_static
-	./main_static energy_prices.txt
+	(./main_dynamic energy_prices.txt; echo "dynamic success!") \
+	|| (./main_static energy_prices.txt; echo "static success!")
 
 main_dynamic: main.o library.o
 	$(CC) $(DYFLAGS) main.o library.o -o main_dynamic
@@ -25,4 +20,6 @@ library.o: library.cpp library.hpp
 	$(CC) $(CPPFLAGS) -c library.cpp
 
 clean:
-	@rm *.o; ls -lh main_* >> output.txt; rm main_*; echo "all clean!"
+	@rm *.o; \
+	ls -lh main_* >> output.txt; \
+	rm main_*; echo "all clean!"
