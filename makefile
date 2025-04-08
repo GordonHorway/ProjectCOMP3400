@@ -3,12 +3,9 @@ CPPFLAGS=-std=c++20 -g -Wall -Wextra -Werror -pedantic -O3 -march=native
 DYFLAGS=-lsqlite3
 STFLAGS=./libsqlite3.a
 
-all: fallback
-	(./main_static energy_prices.txt && echo "static success!") \
-	|| (./main_dynamic energy_prices.txt && echo "dynamic success!")
-
-fallback:
-	$(MAKE) main_static || $(MAKE) main_dynamic
+all: energy_prices.txt
+	($(MAKE) main_static && echo "static compilation success!" && (./main_static energy_prices.txt)) \
+	|| ($(MAKE) main_dynamic && echo "dynamic compilation success!" && (./main_dynamic energy_prices.txt))
 
 main_dynamic: main.o library.o
 	$(CC) $(DYFLAGS) main.o library.o -o main_dynamic
