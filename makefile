@@ -19,6 +19,9 @@ main.o: main.cpp
 library.o: library.cpp library.hpp
 	$(CC) $(CPPFLAGS) -c library.cpp
 
+help:
+	@echo "options: \nmain_dynamic\nmain_static\nmain.o\nlibrary.o\nclean"
+	
 clean:
 	@rm *.o; \
 	ls -lh main_* >> output.txt; \
